@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express()
 
 
-port = 88
+port = 80
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
