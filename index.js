@@ -11,9 +11,6 @@ const app = express()
 
 
 
-/home/ubuntu/zoom-phone-router
-
-
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
