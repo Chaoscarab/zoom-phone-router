@@ -22,6 +22,6 @@ https
         cert: fs.readFileSync("../" + 'fullchain.pem'),
       }, app)
       
-    .listen(process.env.HTTPSPORT, () =>[
-        console.log(`server is running at port ${process.env.HTTPSPORT}`)
+    .listen(443, () =>[
+        console.log(`server is running at port ${443}`)
     ])
