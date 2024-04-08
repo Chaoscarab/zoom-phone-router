@@ -18,8 +18,8 @@ app.get('/', (req, res) => {
 
 https
     .createServer({
-        key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
-        cert: fs.readFileSync(process.env.CERTDIR + 'fullchain.pem'),
+        key: fs.readFileSync("../" + 'privkey.pem'),
+        cert: fs.readFileSync("../" + 'fullchain.pem'),
       }, app)
       
     .listen(process.env.HTTPSPORT, () =>[
