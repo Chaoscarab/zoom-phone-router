@@ -20,10 +20,10 @@ app.get('/', (req, res) => {
 
 https
     .createServer({
-        key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
-        cert: fs.readFileSync(process.env.CERTDIR + 'fullchain.pem'),
+        key: fs.readFileSync('../../etc/letsencrypt/live/www.fecundfigwebservices.com/privkey.pem'),
+        cert: fs.readFileSync('../../etc/letsencrypt/live/www.fecundfigwebservices.com/fullchain.pem'),
       }, app)
       
-    .listen(process.env.HTTPSPORT, () =>[
+    .listen(443, () =>[
         console.log(`server is running at port ${process.env.HTTPSPORT}`)
     ])
