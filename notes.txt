@@ -1,0 +1,2 @@
+Certificate is saved at: /etc/letsencrypt/live/www.fecundfigwebservices.com/full                                                chain.pem
+Key is saved at:         /etc/letsencrypt/live/www.fecundfigwebservices.com/priv                                                key.pem
