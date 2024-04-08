@@ -10,12 +10,17 @@ const app = express()
 
 
 
-
+app.use(express.json({}))
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
+
+app.post('/webhook', (req, res) => {
+    console.log(req.body)
+    res.sendStatus(200)
+})
 https
     .createServer({
         key: fs.readFileSync("../" + 'privkey.pem'),
