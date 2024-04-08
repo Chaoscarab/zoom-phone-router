@@ -11,6 +11,7 @@ const app = express()
 
 
 
+/home/ubuntu/zoom-phone-router
 
 
 
@@ -20,10 +21,10 @@ app.get('/', (req, res) => {
 
 https
     .createServer({
-        key: fs.readFileSync('../../../etc/letsencrypt/live/www.fecundfigwebservices.com/privkey.pem'),
-        cert: fs.readFileSync('../../../etc/letsencrypt/live/www.fecundfigwebservices.com/fullchain.pem'),
+        key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
+        cert: fs.readFileSync(process.env.CERTDIR + 'fullchain.pem'),
       }, app)
       
-    .listen(443, () =>[
+    .listen(process.env.HTTPSPORT, () =>[
         console.log(`server is running at port ${process.env.HTTPSPORT}`)
     ])
