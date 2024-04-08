@@ -25,7 +25,7 @@ app.post('/webhook', (req, res) => {
     res.status(200)
 
     const hmac = crypto.createHmac('sha256', 'qs0NKiOvQG2w0-z6XY_2Ig');
-    data = hmac.update(request.body.payload.plainToken)
+    data = hmac.update(req.body.payload.plainToken)
     gen_hmac = data.digest('hex');
 
     res.json({
