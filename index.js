@@ -22,13 +22,13 @@ app.get('/', (req, res) => {
 
 app.post('/webhook', (req, res) => {
     console.log(req.body)
-    response.status(200)
+    res.status(200)
 
     const hmac = crypto.createHmac('sha256', 'qs0NKiOvQG2w0-z6XY_2Ig');
     data = hmac.update(request.body.payload.plainToken)
     gen_hmac = data.digest('hex');
 
-    response.json({
+    res.json({
        "plainToken": req.body.payload.plainToken,
        "encryptedToken": gen_hmac
     })
