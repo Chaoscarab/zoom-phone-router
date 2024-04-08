@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
 
 https
     .createServer({
-        key: fs.readFileSync('../../etc/letsencrypt/live/www.fecundfigwebservices.com/privkey.pem'),
-        cert: fs.readFileSync('../../etc/letsencrypt/live/www.fecundfigwebservices.com/fullchain.pem'),
+        key: fs.readFileSync('../../../etc/letsencrypt/live/www.fecundfigwebservices.com/privkey.pem'),
+        cert: fs.readFileSync('../../../etc/letsencrypt/live/www.fecundfigwebservices.com/fullchain.pem'),
       }, app)
       
     .listen(443, () =>[
