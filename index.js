@@ -15,9 +15,9 @@ const app = express()
 
 app.use(express.json({}))
 
-//CERTDIR
+//process.env.CERTDIR
 ///HTTPSPORT
-//SECRETKEY
+//process.env.SECRETKEY
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
@@ -31,7 +31,7 @@ app.post('/webhook', (req, res) => {
             console.log(req.body)
             res.status(200)
 
-            const hmac = crypto.createHmac('sha256', 'qs0NKiOvQG2w0-z6XY_2Ig');
+            const hmac = crypto.createHmac('sha256', process.env.SECRETKEY);
             data = hmac.update(req.body.payload.plainToken)
             gen_hmac = data.digest('hex');
 
@@ -46,10 +46,11 @@ app.post('/webhook', (req, res) => {
 })
 https
     .createServer({
-        key: fs.readFileSync("../" + 'privkey.pem'),
-        cert: fs.readFileSync("../" + 'fullchain.pem'),
+        key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
+        cert: fs.readFileSync(process.env.CERTDIR + 'fullchain.pem'),
       }, app)
       
-    .listen(443, () =>[
+    .listen(process.env.HTTPSPORT, () =>[
         console.log(`server is running at port ${443}`)
     ])
+git
