@@ -29,7 +29,7 @@ async function fetchFunc(object, url){
               "Content-Type": "application/json"
             },
             credentials: "include",
-            body: JSON.stringify(sendJson)
+            body: JSON.stringify(object)
         });
         console.log(rawResponse)
         try {
