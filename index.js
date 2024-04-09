@@ -19,6 +19,31 @@ app.use(express.json({}))
 ///HTTPSPORT
 //process.env.SECRETKEY
 
+async function fetchFunc(object, url){
+    try{
+        const rawResponse = await fetch(url,{
+            method: "POST", // or 'PUT'
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(sendJson)
+        });
+        
+        try {
+           let passBack = await rawResponse.json()
+           return passBack
+            }catch{
+                throw Error("invalid json fetch response")
+            }
+        
+        }catch{
+            throw Error(`Failed to fetch`)
+        
+        }
+}
+
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
     console.log(process.env.HTTPSPORT)
@@ -41,8 +66,33 @@ app.post('/webhook', (req, res) => {
             "plainToken": req.body.payload.plainToken,
             "encryptedToken": gen_hmac
             })
+    }else if(req.body.event === 'callee_ringing'){
+        let outObj = {}
+        outObj.timezone = req.body.payload.object.caller.timezone
+        outObj.timezone = req.body.payload.object.caller.phone_number
+        outObj.timezone = req.body.payload.object.caller.user_id
+        outObj.status = 'ringing'
+        console.log(outObj)
+        fetchFunc(outObj, "https://services.leadconnectorhq.com/hooks/edoDpMHiDcicZUzruaOU/webhook-trigger/4f5b2324-e0d6-4f82-aa06-6766878b9d0f")
+        res.status(200)
+    }else if(req.body.event === 'phone.callee_missed'){
+        let outObj = {}
+        outObj.timezone = req.body.payload.object.caller.timezone
+        outObj.timezone = req.body.payload.object.caller.phone_number
+        outObj.timezone = req.body.payload.object.caller.user_id
+        outObj.status = 'missed'
+        console.log(outObj)
+        fetchFunc(outObj, "https://services.leadconnectorhq.com/hooks/edoDpMHiDcicZUzruaOU/webhook-trigger/4f5b2324-e0d6-4f82-aa06-6766878b9d0f")
+        res.status(200)
     }
+
+
+
+
+
 })
+
+
 https
     .createServer({
         key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
