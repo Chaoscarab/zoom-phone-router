@@ -72,10 +72,10 @@ app.post('/webhook', (req, res) => {
     }else if(req.body.event === 'phone.callee_ringing'){
         let outObj = {}
         outObj.timezone = req.body.payload.object.caller.timezone
-        outObj.timezone = req.body.payload.object.caller.phone_number
-        outObj.timezone = req.body.payload.object.caller.user_id
+        outObj.phone_number = req.body.payload.object.caller.phone_number
+        outObj.user_id = req.body.payload.object.caller.user_id
         outObj.status = 'ringing'
-        console.log(outObj)
+        console.log(outObj, req.body, req.body.payload, req.body.payload.object, req.body.payload.object.caller, req.body.payload.object.caller.timezone)
         fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
     }else if(req.body.event === 'phone.callee_missed'){
