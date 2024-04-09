@@ -26,6 +26,8 @@ app.get('/', (req, res) => {
 
 
 app.post('/webhook', (req, res) => {
+    console.log(req.body)
+    console.log(req.body.event, req.body.event === 'endpoint.url_validation')
 
     if(req.body.event === 'endpoint.url_validation'){
             console.log(req.body)
@@ -40,9 +42,6 @@ app.post('/webhook', (req, res) => {
             "encryptedToken": gen_hmac
             })
     }
-
-    3
-    
 })
 https
     .createServer({
