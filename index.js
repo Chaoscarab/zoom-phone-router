@@ -76,7 +76,7 @@ app.post('/webhook', (req, res) => {
         outObj.timezone = req.body.payload.object.caller.user_id
         outObj.status = 'ringing'
         console.log(outObj)
-        fetchFunc(outObj, "https://services.leadconnectorhq.com/hooks/edoDpMHiDcicZUzruaOU/webhook-trigger/4f5b2324-e0d6-4f82-aa06-6766878b9d0f")
+        fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
     }else if(req.body.event === 'phone.callee_missed'){
         let outObj = {}
@@ -85,7 +85,7 @@ app.post('/webhook', (req, res) => {
         outObj.timezone = req.body.payload.object.caller.user_id
         outObj.status = 'missed'
         console.log(outObj)
-        fetchFunc(outObj, "https://services.leadconnectorhq.com/hooks/edoDpMHiDcicZUzruaOU/webhook-trigger/4f5b2324-e0d6-4f82-aa06-6766878b9d0f")
+        fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
     }
 
