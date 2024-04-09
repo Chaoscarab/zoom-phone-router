@@ -20,6 +20,7 @@ app.use(express.json({}))
 //process.env.SECRETKEY
 
 async function fetchFunc(object, url){
+    console.log(object, url)
     try{
         const rawResponse = await fetch(url,{
             method: "POST", // or 'PUT'
@@ -30,7 +31,7 @@ async function fetchFunc(object, url){
             credentials: "include",
             body: JSON.stringify(sendJson)
         });
-        
+        console.log(rawResponse)
         try {
            let passBack = await rawResponse.json()
            return passBack
