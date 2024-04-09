@@ -38,7 +38,8 @@ async function fetchFunc(object, url){
                 throw Error("invalid json fetch response")
             }
         
-        }catch{
+        }catch(e){
+            console.log(e)
             throw Error(`Failed to fetch`)
         
         }
