@@ -66,7 +66,7 @@ app.post('/webhook', (req, res) => {
             "plainToken": req.body.payload.plainToken,
             "encryptedToken": gen_hmac
             })
-    }else if(req.body.event === 'callee_ringing'){
+    }else if(req.body.event === 'phone.callee_ringing'){
         let outObj = {}
         outObj.timezone = req.body.payload.object.caller.timezone
         outObj.timezone = req.body.payload.object.caller.phone_number
