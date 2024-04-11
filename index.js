@@ -75,28 +75,35 @@ app.post('/webhook', (req, res) => {
         outObj.phone_number = req.body.payload.object.caller.phone_number
         outObj.user_id = req.body.payload.object.caller.user_id
         outObj.status = 'ringing'
-        console.log(outObj, req.body, req.body.payload, req.body.payload.object, req.body.payload.object.caller, req.body.payload.object.caller.timezone)
+        console.log(req.body.payload.object.caller)
         fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
     }else if(req.body.event === 'phone.callee_missed'){
         let outObj = {}
-        outObj.timezone = req.body.payload.object.caller.timezone
-        outObj.phone_number = req.body.payload.object.caller.phone_number
-        outObj.user_id = req.body.payload.object.caller.user_id
+        let payObj = req.body.payload.object
+        outObj.timezone = payObj.caller.timezone
+        outObj.phone_number = payObj.caller.caller.phone_number
+        outObj.user_id = payObj.caller.user_id
         outObj.status = 'missed'
-        console.log(outObj, req.body, req.body.payload, req.body.payload.object, req.body.payload.object.caller, req.body.payload.object.caller.timezone)
+        console.log(req.body.payload.object.caller)
+        
         fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
+
     }else if(req.body.event === 'phone.caller_connected'){
         let outObj = {}
         outObj.timezone = req.body.payload.object.caller.timezone
         outObj.phone_number = req.body.payload.object.caller.phone_number
         outObj.user_id = req.body.payload.object.caller.user_id
         outObj.status = 'connected'
-        console.log(outObj, req.body, req.body.payload, req.body.payload.object, req.body.payload.object.caller, req.body.payload.object.caller.timezone)
+        console.log(req.body.payload.object.caller)
+       
         fetchFunc(outObj, process.env.HIGHLEVELURL)
         res.status(200)
+        
     }
+
+
 
 
 
