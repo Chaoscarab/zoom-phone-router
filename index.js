@@ -42,7 +42,7 @@ app.use(express.json({}))
         outObj.timezone = arg.timezone
     }else{
         console.log('timezone exclueded')
-        arg.timezome = 'none'
+        outObj.timezone = 'none'
     }
 
     console.log(outObj, 'ObjectParser Output')
