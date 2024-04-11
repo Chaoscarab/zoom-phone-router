@@ -19,8 +19,35 @@ app.use(express.json({}))
 ///HTTPSPORT
 //process.env.SECRETKEY
 
+
+    function objectParser(arg, arg2){
+    let inObj = arg
+    let outObj = {}
+    outObj.type = arg2
+    if(arg.hasOwnProperty('phone_number') && arg.phone_number.length >= 10){
+        outObj.phone_number = arg.phone_number
+    }else{
+        console.log('returned false')
+        return false
+    }
+
+    if(arg.hasOwnProperty('name')){
+        outObj.name = arg.name
+    }else{
+        outObj.name = 'none'
+    }
+
+    if(arg.hasOwnProperty('timezone')){
+        outObj.timezone = arg.timezone
+    }else{
+        arg.timezome = 'none'
+    }
+    console.log(outObj, 'ObjectParser Output')
+    return outObj
+
+    }
+
 async function fetchFunc(object, url){
-    console.log(object, url)
     try{
         const rawResponse = await fetch(url,{
             method: "POST", // or 'PUT'
@@ -48,13 +75,13 @@ async function fetchFunc(object, url){
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
-    console.log(process.env.HTTPSPORT)
 })
 
 
 app.post('/webhook', (req, res) => {
-    console.log(req.body)
-    console.log(req.body.event, req.body.event === 'endpoint.url_validation')
+    console.log(req.body.event)
+
+
 
     if(req.body.event === 'endpoint.url_validation'){
             console.log(req.body)
@@ -68,34 +95,41 @@ app.post('/webhook', (req, res) => {
             "plainToken": req.body.payload.plainToken,
             "encryptedToken": gen_hmac
             })
+
     }else if(req.body.event === 'phone.callee_ringing'){
-        let outObj = {}
-        outObj.timezone = req.body.payload.object.caller.timezone
-        outObj.phone_number = req.body.payload.object.caller.phone_number
-        outObj.user_id = req.body.payload.object.caller.user_id
-        outObj.status = 'ringing'
         console.log(req.body.payload.object.caller)
-        fetchFunc(outObj, process.env.HIGHLEVELURL)
+
+        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        if(fetchObj === false){
+
+        }else{
+            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
+        }
+        
+
         res.status(200)
+
+
     }else if(req.body.event === 'phone.callee_missed'){
-        let outObj = {}
-        let payObj = req.body.payload.object
-        outObj.payload = payObj
-        
+    
         console.log(req.body.payload.object.caller)
         
-        fetchFunc(outObj, process.env.HIGHLEVELURL)
+        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        if(fetchObj === false){
+
+        }else{
+            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
+        }
         res.status(200)
 
     }else if(req.body.event === 'phone.caller_connected'){
-        let outObj = {}
-        outObj.timezone = req.body.payload.object.caller.timezone
-        outObj.phone_number = req.body.payload.object.caller.phone_number
-        outObj.user_id = req.body.payload.object.caller.user_id
-        outObj.status = 'connected'
         console.log(req.body.payload.object.caller)
-       
-        fetchFunc(outObj, process.env.HIGHLEVELURL)
+        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        if(fetchObj === false){
+
+        }else{
+            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
+        }
         res.status(200)
         
     }
