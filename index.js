@@ -80,10 +80,8 @@ app.post('/webhook', (req, res) => {
     }else if(req.body.event === 'phone.callee_missed'){
         let outObj = {}
         let payObj = req.body.payload.object
-        outObj.timezone = payObj.caller.timezone
-        outObj.phone_number = payObj.caller.caller.phone_number
-        outObj.user_id = payObj.caller.user_id
-        outObj.status = 'missed'
+        outObj.payload = payObj
+        
         console.log(req.body.payload.object.caller)
         
         fetchFunc(outObj, process.env.HIGHLEVELURL)
