@@ -38,10 +38,13 @@ app.use(express.json({}))
     }
 
     if(arg.hasOwnProperty('timezone')){
+        console.log('timeszone included')
         outObj.timezone = arg.timezone
     }else{
+        console.log('timezone exclueded')
         arg.timezome = 'none'
     }
+
     console.log(outObj, 'ObjectParser Output')
     return outObj
 
@@ -114,7 +117,7 @@ app.post('/webhook', (req, res) => {
     
         console.log(req.body.payload.object.caller)
         
-        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        let fetchObj = objectParser(req.body.payload.object.caller, 'missed')
         if(fetchObj === false){
 
         }else{
@@ -124,7 +127,8 @@ app.post('/webhook', (req, res) => {
 
     }else if(req.body.event === 'phone.caller_connected'){
         console.log(req.body.payload.object.caller)
-        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+
+        let fetchObj = objectParser(req.body.payload.object.caller, 'connected')
         if(fetchObj === false){
 
         }else{
