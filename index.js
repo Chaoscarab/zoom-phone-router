@@ -99,9 +99,8 @@ app.post('/webhook', (req, res) => {
             "encryptedToken": gen_hmac
             })
 
-    }else if(req.body.event === 'phone.callee_ringing'){
-        
-
+    }else if(req.body.payload.caller.phone_number === '+17725895500'){
+        console.log(req.body.payload.caller.phone_number)
         res.status(200)
 
 
