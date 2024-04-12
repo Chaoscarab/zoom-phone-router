@@ -75,6 +75,7 @@ async function fetchFunc(object, url){
         }
 }
 
+let calledArr = []
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
@@ -104,7 +105,10 @@ app.post('/webhook', (req, res) => {
         res.status(200)
 
 
-    }else if(req.body.event === 'phone.callee_missed'){
+    }else if(req.body.event === 'phone.callee_ringing'){
+        console.log(req.body.payload.object.caller, 'phone ringing')
+    }
+    else if(req.body.event === 'phone.callee_missed'){
     
         console.log(req.body.payload.object.caller)
         
