@@ -100,14 +100,6 @@ app.post('/webhook', (req, res) => {
             })
 
     }else if(req.body.event === 'phone.callee_ringing'){
-        console.log(req.body.payload.object.caller)
-
-        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
-        if(fetchObj === false){
-
-        }else{
-            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
-        }
         
 
         res.status(200)
