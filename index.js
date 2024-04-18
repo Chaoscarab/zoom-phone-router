@@ -102,7 +102,6 @@ app.post('/webhook', (req, res) => {
             })
 
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
-        console.log(req.body.payload.object)
         res.status(200)
 
 
