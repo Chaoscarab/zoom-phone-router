@@ -105,8 +105,6 @@ app.post('/webhook', (req, res) => {
         res.status(200)
 
 
-    }else if(req.body.event === 'phone.callee_ringing'){
-        console.log(req.body.payload.object.caller, 'phone ringing')
     }
     else if(req.body.event === 'phone.callee_missed'){
     
@@ -120,17 +118,7 @@ app.post('/webhook', (req, res) => {
         }
         res.status(200)
 
-    }else if(req.body.event === 'phone.caller_connected'){
-        console.log(req.body.payload.object.caller)
-
-        let fetchObj = objectParser(req.body.payload.object.caller, 'connected')
-        if(fetchObj === false){
-
-        }else{
-            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
-        }
-        res.status(200)
-        
+    
     }
 
 
