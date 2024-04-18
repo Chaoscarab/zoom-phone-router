@@ -63,6 +63,7 @@ async function fetchFunc(object, url){
         });
         try {
            let passBack = await rawResponse.json()
+           console.log(passBack)
            return passBack
             }catch{
                 throw Error("invalid json fetch response")
