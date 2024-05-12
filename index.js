@@ -76,7 +76,6 @@ async function fetchFunc(object, url){
         }
 }
 
-let calledArr = []
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
