@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
-
+//zoom webhook
 app.post('/webhook', (req, res) => {
     console.log(req.body.event)
 
@@ -129,13 +129,10 @@ app.post('/webhook', (req, res) => {
 
 })
 
+//mycase webhook
 
-https
-    .createServer({
-        key: fs.readFileSync(process.env.CERTDIR + 'privkey.pem'),
-        cert: fs.readFileSync(process.env.CERTDIR + 'fullchain.pem'),
-      }, app)
-      
-    .listen(process.env.HTTPSPORT, () =>[
-        console.log(`server is running at port ${process.env.HTTPSPORT}`)
-    ])
+
+
+app.listen(process.env.PORT, () => {
+
+})
