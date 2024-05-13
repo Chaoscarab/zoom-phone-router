@@ -87,19 +87,13 @@ app.post('/webhook', (req, res) => {
 
 
 
-    if(req.body.event === 'endpoint.url_validation'){
-            console.log(req.body)
-            res.status(200)
-console.log(process.env.SECRETKEY)
-            const hmac = crypto.createHmac('sha256', process.env.SECRETKEY);
-            data = hmac.update(req.body.payload.plainToken)
-            gen_hmac = data.digest('hex');
+    if (req.body.event == 'endpoint.url_validation') {
+        let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
-            res.json({
-            "plainToken": req.body.payload.plainToken,
-            "encryptedToken": gen_hmac
-            })
-
+        return res.json({
+            plainToken: req.body.payload.plainToken,
+            encryptedToken: encryptedToken
+        })
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
         res.status(200)
 
