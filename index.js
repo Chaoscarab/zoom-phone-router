@@ -90,7 +90,7 @@ app.post('/webhook', (req, res) => {
     if(req.body.event === 'endpoint.url_validation'){
             console.log(req.body)
             res.status(200)
-
+console.log(process.env.SECRETKEY)
             const hmac = crypto.createHmac('sha256', process.env.SECRETKEY);
             data = hmac.update(req.body.payload.plainToken)
             gen_hmac = data.digest('hex');
