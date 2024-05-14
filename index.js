@@ -26,7 +26,7 @@ app.use(express.json({}))
     if(arg.hasOwnProperty('phone_number') && arg.phone_number.length >= 10){
         outObj.phone_number = arg.phone_number
     }else{
-        console.log('returned false')
+
         return false
     }
 
@@ -37,14 +37,14 @@ app.use(express.json({}))
     }
 
     if(arg.hasOwnProperty('timezone')){
-        console.log('timeszone included')
+       
         outObj.timezone = arg.timezone
     }else{
-        console.log('timezone exclueded')
+     
         outObj.timezone = 'none'
     }
 
-    console.log(outObj, 'ObjectParser Output')
+  
     return outObj
 
     }
@@ -62,7 +62,6 @@ async function fetchFunc(object, url){
         });
         try {
            let passBack = await rawResponse.json()
-           console.log(passBack)
            return passBack
             }catch{
                 throw Error("invalid json fetch response")
@@ -82,7 +81,7 @@ app.get('/', (req, res) => {
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-    console.log(req.body.event)
+
 
 
 
@@ -101,7 +100,6 @@ app.post('/webhook', (req, res) => {
     }
     else if(req.body.event === 'phone.callee_missed'){
     
-        console.log(req.body.payload.object.caller)
         
         let fetchObj = objectParser(req.body.payload.object.caller, 'missed')
         if(fetchObj === false){
@@ -133,7 +131,6 @@ app.post('/webhook', (req, res) => {
 //mycase webhook
 
 
-console.log(process.env.PORT)
 app.listen(process.env.PORT, () => {
 
 })
