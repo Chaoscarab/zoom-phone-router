@@ -21,7 +21,6 @@ app.use(express.json({}))
 
 
     function objectParser(arg, arg2){
-    let inObj = arg
     let outObj = {}
     outObj.type = arg2
     if(arg.hasOwnProperty('phone_number') && arg.phone_number.length >= 10){
@@ -94,6 +93,7 @@ app.post('/webhook', (req, res) => {
             plainToken: req.body.payload.plainToken,
             encryptedToken: encryptedToken
         })
+        
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
         res.status(200)
 
@@ -112,6 +112,14 @@ app.post('/webhook', (req, res) => {
         res.status(200)
 
     
+    }else if (req.body.event === 'phone.callee_ringing'){
+        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        if(fetchObj === false){
+
+        }else{
+            fetchFunc(fetchObj, process.env.ZOOMINBOUND)
+        }
+        res.status(200)
     }
 
 
@@ -125,7 +133,7 @@ app.post('/webhook', (req, res) => {
 //mycase webhook
 
 
-
+console.log(process.env.PORT)
 app.listen(process.env.PORT, () => {
 
 })
