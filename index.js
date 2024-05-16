@@ -115,7 +115,6 @@ app.post('/webhook', (req, res) => {
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
         }else{
-            console.log(req.body.payload.object)
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
         res.status(200)
