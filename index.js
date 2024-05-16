@@ -112,11 +112,10 @@ app.post('/webhook', (req, res) => {
     
     }else if (req.body.event === 'phone.callee_ringing'){
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
-        if(fetchObj === false){
+        if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
         }else{
-            console.log(req.body.payload.object.forwarded_by)
-            console.log(Object.keys(req.body.payload.object))
+            console.log(req.body.payload.object)
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
         res.status(200)
