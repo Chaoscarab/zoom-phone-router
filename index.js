@@ -115,8 +115,8 @@ app.post('/webhook', (req, res) => {
         if(fetchObj === false){
 
         }else{
-            console.log(req.body.payload)
-            console.log(Object.keys(req.body.payload))
+            console.log(req.body.payload.object.forwarded_by)
+            console.log(Object.keys(req.body.payload.object))
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
         res.status(200)
