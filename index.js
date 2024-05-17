@@ -13,11 +13,13 @@ const app = express()
 
 const uri = process.env.ATLASURI
 const client = new MongoClient(uri);
-try{
-    await client.connect();
-}catch(error){
-console.log(error)
+async function getConnection(){
+    const connection = await client.connect();
+console.log(connection)
+connection.close();
 }
+getConnection()
+
 /*
 const dbName = "fecundfigwebservices";
 const collectionName = "ClientObjects";
@@ -46,7 +48,6 @@ async function insertData(array){
 
 await insertData(testData)
 */
-await client.close();
 
 
 app.use(express.json({}))
