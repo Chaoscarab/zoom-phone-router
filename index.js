@@ -12,7 +12,41 @@ const { MongoClient } = require("mongodb");
 const app = express()
 
 const uri = process.env.ATLASURI
+const client = new MongoClient(uri);
+try{
+    await client.connect();
+}catch(error){
+console.log(error)
+}
+/*
+const dbName = "fecundfigwebservices";
+const collectionName = "ClientObjects";
 
+const database = client.db(dbName);
+const collection = database.collection(collectionName);
+
+
+const testData = [
+    {phoneNumber: '777-777-7777',
+    cases: [
+        {caseid: '1111111',
+        casetype: "test"}
+    ]
+    }
+]
+
+async function insertData(array){
+    try {
+        const insertManyResult = await collection.insertMany(array);
+        console.log(`${insertManyResult.insertedCount} documents successfully inserted.\n`);
+      } catch (err) {
+        console.error(`Something went wrong trying to insert the new documents: ${err}\n`);
+      }
+}
+
+await insertData(testData)
+*/
+await client.close();
 
 
 app.use(express.json({}))
@@ -80,38 +114,7 @@ async function fetchFunc(object, url){
 
 app.get('/', async (req, res) => 
     {
-    const client = new MongoClient(uri);
-    await client.connect();
-    
-    
-    const dbName = "fecundfigwebservices";
-    const collectionName = "ClientObjects";
-    
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-    
-    
-    const testData = [
-        {phoneNumber: '777-777-7777',
-        cases: [
-            {caseid: '1111111',
-            casetype: "test"}
-        ]
-        }
-    ]
-
-    async function insertData(array){
-        try {
-            const insertManyResult = await collection.insertMany(array);
-            console.log(`${insertManyResult.insertedCount} documents successfully inserted.\n`);
-          } catch (err) {
-            console.error(`Something went wrong trying to insert the new documents: ${err}\n`);
-          }
-    }
-
-    await insertData(testData)
-    
-    await client.close();
+   
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
