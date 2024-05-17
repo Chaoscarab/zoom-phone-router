@@ -12,6 +12,7 @@ const { MongoClient } = require("mongodb");
 const app = express()
 
 const uri = process.env.ATLASURI
+console.log(uri)
 const client = new MongoClient(uri);
 async function getConnection(){
     const connection = await client.connect();
