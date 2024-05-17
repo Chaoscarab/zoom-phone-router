@@ -5,7 +5,7 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const crypto = require('crypto');
-const { MongoClient } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
 //initializing express app
@@ -13,42 +13,29 @@ const app = express()
 
 const uri = process.env.ATLASURI
 console.log(uri)
-const client = new MongoClient(uri);
-async function getConnection(){
-    const connection = await client.connect();
-console.log(connection)
-connection.close();
+
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
 }
-getConnection()
-
-/*
-const dbName = "fecundfigwebservices";
-const collectionName = "ClientObjects";
-
-const database = client.db(dbName);
-const collection = database.collection(collectionName);
-
-
-const testData = [
-    {phoneNumber: '777-777-7777',
-    cases: [
-        {caseid: '1111111',
-        casetype: "test"}
-    ]
-    }
-]
-
-async function insertData(array){
-    try {
-        const insertManyResult = await collection.insertMany(array);
-        console.log(`${insertManyResult.insertedCount} documents successfully inserted.\n`);
-      } catch (err) {
-        console.error(`Something went wrong trying to insert the new documents: ${err}\n`);
-      }
-}
-
-await insertData(testData)
-*/
+run().catch(console.dir);
 
 
 app.use(express.json({}))
