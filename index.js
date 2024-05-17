@@ -5,11 +5,13 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const crypto = require('crypto');
-
+const { MongoClient } = require("mongodb");
 
 
 //initializing express app
 const app = express()
+
+const uri = process.env.ATLASURI
 
 
 
@@ -75,7 +77,41 @@ async function fetchFunc(object, url){
 }
 
 
-app.get('/', (req, res) => {
+
+app.get('/', async (req, res) => 
+    {
+    const client = new MongoClient(uri);
+    await client.connect();
+    
+    
+    const dbName = "fecundfigwebservices";
+    const collectionName = "ClientObjects";
+    
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+    
+    
+    const testData = [
+        {phoneNumber: '777-777-7777',
+        cases: [
+            {caseid: '1111111',
+            casetype: "test"}
+        ]
+        }
+    ]
+
+    async function insertData(array){
+        try {
+            const insertManyResult = await collection.insertMany(array);
+            console.log(`${insertManyResult.insertedCount} documents successfully inserted.\n`);
+          } catch (err) {
+            console.error(`Something went wrong trying to insert the new documents: ${err}\n`);
+          }
+    }
+
+    await insertData(testData)
+    
+    await client.close();
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
