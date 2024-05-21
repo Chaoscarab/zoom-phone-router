@@ -5,19 +5,14 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const crypto = require('crypto');
-
+const { MongoClient, ServerApiVersion,} = require("mongodb");
 
 //initializing express app
 const app = express()
 
 
 
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const { MongoClient, ServerApiVersion } = require("mongodb");
-// Replace the placeholder with your Atlas connection string
 const uri = process.env.MONGODBURI;
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri,  {
         serverApi: {
             version: ServerApiVersion.v1,
@@ -26,20 +21,41 @@ const client = new MongoClient(uri,  {
         }
     }
 );
-async function run() {
-  try {
-    // Connect the client to the server (optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
 
+
+async function createDoc(arg){
+    let output;
+    try {
+        await client.connect()
+        const myDB = client.db('main')
+        const myColl = myDB.collection('clientObjs')
+        const result = await myColl.insertOne(arg)
+        output = result
+        console.log(result)
+    }catch(e){
+        console.log(e)
+    }finally {
+        await client.close()
+        return output;
+    }
+}
+
+async function readDoc(arg){
+    let output;
+    try {
+        await client.connect()
+        const myDB = client.db('main')
+        const myColl = myDB.collection('clientObjs')
+        const result = await myColl.findOne(arg)
+        console.log(result)
+        output = result;
+    }catch(e){
+        console.log(e)
+    }finally {
+        await client.close()
+        return output;
+    }
+}
 
 app.use(express.json({}))
 
@@ -113,9 +129,6 @@ app.get('/', async (req, res) =>
 //zoom webhook
 app.post('/webhook', (req, res) => {
 
-
-
-
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -159,7 +172,18 @@ app.post('/webhook', (req, res) => {
 
 })
 
-//mycase webhook
+//send to mycase outbound
+app.post('/mycase', async(req, res) => {
+let test = {phone: '000-000-0000'}
+let check = await readDoc(test)
+if(check){
+console.log(check)
+}else{
+    let outdata = await createDoc(test)
+    console.log(outdata)
+}
+})
+
 
 
 app.listen(process.env.PORT, () => {
