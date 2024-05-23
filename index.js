@@ -95,7 +95,6 @@ app.use(express.json({}))
 
 async function fetchFunc(object, url){
     try{
-        console.log(object)
         const rawResponse = await fetch(url,{
             method: "POST", // or 'PUT'
             headers: {
@@ -155,7 +154,6 @@ app.post('/webhook', (req, res) => {
 
     
     }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){
-        console.log(req.body.payload.object.callee)
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
