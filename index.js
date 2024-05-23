@@ -95,6 +95,7 @@ app.use(express.json({}))
 
 async function fetchFunc(object, url){
     try{
+        console.log(object)
         const rawResponse = await fetch(url,{
             method: "POST", // or 'PUT'
             headers: {
@@ -107,12 +108,14 @@ async function fetchFunc(object, url){
         try {
            let passBack = await rawResponse.json()
            return passBack
-            }catch{
+            }catch (e){
+                console.log(e, 'error log at passback'
+                )
                 throw Error("invalid json fetch response")
             }
         
         }catch(e){
-            console.log(e)
+            console.log(e, 'error log at catch')
             throw Error(`Failed to fetch`)
         
         }
@@ -128,7 +131,7 @@ app.get('/', async (req, res) =>
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-
+console.log(req.body, 'req.body at /webhook')
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -177,11 +180,14 @@ app.post('/mycase', async(req, res) => {
 let test = {phone: '000-000-0000'}
 let check = await readDoc(test)
 if(check){
-console.log(check)
+
+    
 }else{
-    let outdata = await createDoc(test)
-    console.log(outdata)
+    
+     await createDoc(test)
+    
 }
+res.status(200)
 })
 
 
