@@ -130,6 +130,7 @@ app.get('/', async (req, res) =>
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
+    console.log('recived data')
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
