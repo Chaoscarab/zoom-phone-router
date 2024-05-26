@@ -155,14 +155,7 @@ app.post('/webhook', (req, res) => {
 
     
     }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){ 
-
-        const log = fs.createWriteStream('./log.txt', { flags: 'a' });
-        log.on('error', (e) => console.log('I got an before write', e));
-        log.write(req.body);
-        log.on('error', (e) => console.log('I got an error after write', e));
-        log.end
-
-        console.log(req.body.event)
+        console.log(req.body)
 
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
