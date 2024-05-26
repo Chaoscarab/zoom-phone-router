@@ -142,7 +142,7 @@ app.post('/webhook', (req, res) => {
         res.status(200)
     }
     else if(req.body.event === 'phone.callee_missed'){
-    
+
         
         let fetchObj = objectParser(req.body.payload.object.caller, 'missed')
         if(fetchObj === false){
@@ -153,7 +153,12 @@ app.post('/webhook', (req, res) => {
         res.status(200)
 
     
-    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){
+    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){ 
+
+        const log = fs.createWriteStream('log.txt', { flags: 'a' });
+        log.write(req.body);
+        log.end
+        
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
