@@ -130,7 +130,6 @@ app.get('/', async (req, res) =>
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-    console.log('recived data')
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -155,7 +154,7 @@ app.post('/webhook', (req, res) => {
 
     
     }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){ 
-        console.log(req.body)
+        console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
 
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
