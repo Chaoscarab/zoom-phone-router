@@ -142,7 +142,7 @@ const callPromise = async (arg) => {
           callLog.splice(indexToRemove, 1);
           resolve()
         }
-      }, 10000);
+      }, 20000);
     });
     }
 
