@@ -128,6 +128,24 @@ app.get('/', async (req, res) =>
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
+
+//call log array
+let callLog = []
+
+const callPromise = async (arg) => {
+//req.body.payload.object.callee.phone_number === arg
+    callLog.push(arg);
+    let promise = new Promise(function(resolve, reject) {
+      setTimeout(() => {
+        const indexToRemove = callLog.indexOf(arg);
+        if (indexToRemove !== -1) {
+          callLog.splice(indexToRemove, 1);
+          resolve()
+        }
+      }, 10000);
+    });
+    }
+
 //zoom webhook
 app.post('/webhook', (req, res) => {
     if (req.body.event == 'endpoint.url_validation') {
@@ -153,9 +171,12 @@ app.post('/webhook', (req, res) => {
         res.status(200)
 
     
-    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500'){ 
+    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1){ 
         console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
-
+        
+        //create promise for call log
+        callPromise(req.body.payload.object.callee.phone_number)
+        
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
