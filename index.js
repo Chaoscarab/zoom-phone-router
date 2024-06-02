@@ -159,7 +159,7 @@ app.post('/webhook', (req, res) => {
         })
         
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
-        res.status(200)
+        res.send.status(200)
     }
     else if(req.body.event === 'phone.callee_missed'){
 
@@ -170,7 +170,7 @@ app.post('/webhook', (req, res) => {
         }else{
             fetchFunc(fetchObj, process.env.HIGHLEVELURL)
         }
-        res.status(200)
+        res.send.status(200)
 
     
     }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1){ 
@@ -185,7 +185,7 @@ app.post('/webhook', (req, res) => {
         }else{
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
-        res.status(200)
+        res.send.status(200)
     }
 
 
