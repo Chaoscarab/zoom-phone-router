@@ -148,7 +148,8 @@ const callPromise = async (arg) => {
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-    console.log(callLog.length)
+    console.log(callLog.length, 'callLog length')
+
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
