@@ -169,7 +169,7 @@ app.post('/webhook', (req, res) => {
         if(fetchObj === false){
 
         }else{
-            console.log('webhook triggered')
+            
             fetchFunc(fetchObj, process.env.HIGHLEVELURL)
         }
         res.sendStatus(200)
@@ -182,9 +182,11 @@ app.post('/webhook', (req, res) => {
         callPromise(req.body.payload.object.callee.phone_number)
         
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
+        console.log('fetchObj', fetchObj)
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
 
         }else{
+            console.log('webhook triggered')
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
         res.sendStatus(200)
