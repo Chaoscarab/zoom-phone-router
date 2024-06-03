@@ -149,6 +149,7 @@ const callPromise = async (arg) => {
 //zoom webhook
 app.post('/webhook', (req, res) => {
     console.log(callLog.length, 'callLog length')
+    console.log(callLog.indexOf(req.body.payload.object.callee.phone_number))
     console.log('req.body', req.body, req.body.payload.object.caller )
     if (req.body.event == 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
@@ -168,6 +169,7 @@ app.post('/webhook', (req, res) => {
         if(fetchObj === false){
 
         }else{
+            console.log('webhook triggered')
             fetchFunc(fetchObj, process.env.HIGHLEVELURL)
         }
         res.sendStatus(200)
