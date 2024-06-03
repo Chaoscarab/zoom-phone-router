@@ -184,7 +184,7 @@ app.post('/webhook', (req, res) => {
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
         console.log('fetchObj', fetchObj)
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
-console.log(req.body.payload.object.forwarded_by)
+console.log('forwared by', req.body.payload.object.forwarded_by)
         }else{
             console.log('webhook triggered')
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
