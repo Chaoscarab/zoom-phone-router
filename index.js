@@ -151,6 +151,7 @@ app.post('/webhook', (req, res) => {
     console.log(callLog.length, 'callLog length')
     console.log(callLog.indexOf(req.body.payload.object.callee.phone_number) === -1)
     console.log('req.body', req.body, req.body.payload.object.callee )
+    console.log('forwarded by', req.body.payload.object.forwarded_by)
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
