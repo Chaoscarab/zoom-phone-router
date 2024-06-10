@@ -148,10 +148,10 @@ const callPromise = async (arg) => {
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-    console.log(callLog.length, 'callLog length')
+  /*  console.log(callLog.length, 'callLog length')
     console.log(callLog.indexOf(req.body.payload.object.callee.phone_number) === -1)
     console.log('req.body', req.body, req.body.payload.object.callee )
-    console.log('forwarded by', req.body.payload.object.forwarded_by)
+    console.log('forwarded by', req.body.payload.object.forwarded_by) */
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -177,17 +177,17 @@ app.post('/webhook', (req, res) => {
 
     
     }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1 && !req.body.payload.object.hasOwnProperty){ 
-        console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
+       // console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
         
         //create promise for call log
         callPromise(req.body.payload.object.callee.phone_number)
         
         let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
-        console.log('fetchObj', fetchObj)
+        //console.log('fetchObj', fetchObj)
         if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
-console.log('forwared by', req.body.payload.object.forwarded_by)
+        //console.log('forwared by', req.body.payload.object.forwarded_by)
         }else{
-            console.log('webhook triggered')
+           // console.log('webhook triggered')
             fetchFunc(fetchObj, process.env.ZOOMINBOUND)
         }
         res.sendStatus(200)
@@ -204,7 +204,7 @@ console.log('forwared by', req.body.payload.object.forwarded_by)
 //send to mycase outbound
 app.post('/mycase', async(req, res) => {
 
-    console.log(req.body)
+    console.log('mycase body:', req.body)
 
 })
 
