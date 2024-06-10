@@ -176,7 +176,7 @@ app.post('/webhook', (req, res) => {
         res.sendStatus(200)
 
     
-    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1){ 
+    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1 && !req.body.payload.object.hasOwnProperty){ 
         console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
         
         //create promise for call log
@@ -203,18 +203,11 @@ console.log('forwared by', req.body.payload.object.forwarded_by)
 
 //send to mycase outbound
 app.post('/mycase', async(req, res) => {
-let test = {phone: '000-000-0000'}
-let check = await readDoc(test)
-if(check){
 
-    
-}else{
-    
-     await createDoc(test)
-    
-}
-res.status(200)
+    console.log(req.body)
+
 })
+
 
 
 
