@@ -205,7 +205,7 @@ app.post('/webhook', (req, res) => {
 app.post('/mycase', async(req, res) => {
 
     console.log('mycase body:', req.body)
-
+    res.sendStatus(200)
 })
 
 
