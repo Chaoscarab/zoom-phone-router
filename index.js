@@ -205,8 +205,8 @@ app.post('/webhook', (req, res) => {
 app.post('/mycase', async(req, res) => {
 
     console.log('mycase body:', req.body)
-    const {id, phone, file1} = req.body
-    let outObj = {id: id, phone: phone, file: file1}
+    const {mycaseId, phone, file1} = req.body
+    let outObj = {id: mycaseId, phone: phone, file: file1}
 
     let zapRes = await fetchFunc(outObj, process.env.MKDOCMYCSZAP)
     console.log(zapRes)
