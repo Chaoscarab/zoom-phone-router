@@ -261,7 +261,7 @@ app.post('/mycase', async(req, res) => {
       } = req.body
       let promiseField = []
 
-      if (file1 !== '') {
+      if (file1 !== 'null') {
         let file1Name = fileExtensionAppender(file1, file1name);
         let outObj = { id: mycaseId, phone: phone, file: file1, filename: file1Name };
         let zapRes1 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
@@ -269,63 +269,63 @@ app.post('/mycase', async(req, res) => {
         promiseField.push(zapRes1);
       }
       
-      if (file2 !== '') {
+      if (file2 !== 'null') {
         let file2Name = fileExtensionAppender(file2, file2name);
         let outObj = { id: mycaseId, phone: phone, file: file2, filename: file2Name };
         let zapRes2 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes2);
       }
       
-      if (file3 !== '') {
+      if (file3 !== 'null') {
         let file3Name = fileExtensionAppender(file3, file3name);
         let outObj = { id: mycaseId, phone: phone, file: file3, filename: file3Name };
         let zapRes3 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes3);
       }
       
-      if (file4 !== '') {
+      if (file4 !== 'null') {
         let file4Name = fileExtensionAppender(file4, file4name);
         let outObj = { id: mycaseId, phone: phone, file: file4, filename: file4Name };
         let zapRes4 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes4);
       }
       
-      if (file5 !== '') {
+      if (file5 !== 'null') {
         let file5Name = fileExtensionAppender(file5, file5name);
         let outObj = { id: mycaseId, phone: phone, file: file5, filename: file5Name };
         let zapRes5 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes5);
       }
       
-      if (file6 !== '') {
+      if (file6 !== 'null') {
         let file6Name = fileExtensionAppender(file6, file6name);
         let outObj = { id: mycaseId, phone: phone, file: file6, filename: file6Name };
         let zapRes6 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes6);
       }
       
-      if (file7 !== '') {
+      if (file7 !== 'null') {
         let file7Name = fileExtensionAppender(file7, file7name);
         let outObj = { id: mycaseId, phone: phone, file: file7, filename: file7Name };
         let zapRes7 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes7);
       }
       
-      if (file8 !== '') {
+      if (file8 !== 'null') {
         let file8Name = fileExtensionAppender(file8, file8name);
         let outObj = { id: mycaseId, phone: phone, file: file8, filename: file8Name };
         let zapRes8 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes8);
       }
       
-      if (file9 !== '') {
+      if (file9 !== 'null') {
         let file9Name = fileExtensionAppender(file9, file9name);
         let outObj = { id: mycaseId, phone: phone, file: file9, filename: file9Name };
         let zapRes9 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
         promiseField.push(zapRes9);
       }
       
-      if (file10 !== '') {
+      if (file10 !== 'null') {
         let file10Name = fileExtensionAppender(file10, file10name);
         let outObj = { id: mycaseId, phone: phone, file: file10, filename: file10Name };
         let zapRes10 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
