@@ -333,7 +333,7 @@ app.post('/mycase', async(req, res) => {
       }
       if (notes !== 'null') {
         let outObj = { id: mycaseId, phone: phone, notes: notes};
-        let zapResNotes = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
+        let zapResNotes = fetchFunc(outObj, process.env.MKNOTEMYCSZAP);
         promiseField.push(zapResNotes);
       }
 
