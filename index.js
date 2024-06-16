@@ -332,7 +332,9 @@ app.post('/mycase', async(req, res) => {
         promiseField.push(zapRes10);
       }
       if (notes !== 'null') {
-        let outObj = { id: mycaseId, phone: phone, notes: notes};
+        const event = new Date('05 October 2011 14:48 UTC');
+        let date = event.toString()
+        let outObj = { id: mycaseId, phone: phone, notes: notes, date: date};
         let zapResNotes = fetchFunc(outObj, process.env.MKNOTEMYCSZAP);
         promiseField.push(zapResNotes);
       }
