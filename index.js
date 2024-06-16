@@ -334,6 +334,7 @@ app.post('/mycase', async(req, res) => {
 
       try{
         await Promise.all(promiseField)
+        console.log('allpromises complete')
         res.sendStatus(200)
       }catch (e){
         console.log(e)
