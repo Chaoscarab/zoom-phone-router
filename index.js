@@ -432,8 +432,7 @@ app.post('/app', async (req, res) => {
     const userId = req.body.userId
     try{
         const read = await readDoc({userId: userId})
-        console.log(read)
-        const object = await read[0]
+        const object = read
         console.log(object)
         console.log(typeof(object))
         console.log(object, 'object')
