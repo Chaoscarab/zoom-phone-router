@@ -48,12 +48,12 @@ async function readDoc(arg){
         const myDB = client.db('main')
         const myColl = myDB.collection('clientObjs')
         const result = await myColl.findOne(arg)
-        console.log(result)
         output = result;
     }catch(e){
         console.log(e)
     }finally {
         await client.close()
+        console.log(output)
         return output;
     }
 }
