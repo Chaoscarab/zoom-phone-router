@@ -448,8 +448,8 @@ app.post('/app', async (req, res) => {
             },
             credentials: "include",
         });
-
-        console.log(apiCall.json(), apiCall.status)
+        let responseObj = await apiCall.json()
+        console.log(responseObj, apiCall.status)
         res.sendStatus(200)
 
     }catch(error){
