@@ -387,8 +387,8 @@ app.get('/code', (req, res) => {
             body:  new URLSearchParams(params)
         })
         let jsonRaw = await outResponse.json()
-        console.log(req.statusCode, 'statuscode')
-        switch(req.statusCode){
+        console.log(outResponse.status, 'statuscode')
+        switch(outResponse.status){
             case 401:
                 console.log(jsonRaw.statusCode)
                 break;
