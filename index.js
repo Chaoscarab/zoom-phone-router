@@ -32,7 +32,6 @@ async function createDoc(arg){
         const myColl = myDB.collection('clientKeys')
         const result = await myColl.insertOne(arg)
         output = result
-        console.log(result)
     }catch(e){
         console.log(e)
     }finally {
@@ -427,7 +426,14 @@ app.get('/code', (req, res) => {
 })
 
 
-app.post('/app', (req, res) => {
+app.post('/app', async (req, res) => {
+    try{
+        const read = await readDoc({})
+        console.log(read)
+        res.sendStatus(200)
+    }catch(error){
+        console.log(error)
+    }
     
 })
 app.listen(process.env.PORT, () => {
