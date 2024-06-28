@@ -360,7 +360,7 @@ app.post('/mycase', async(req, res) => {
 })
 
 app.get('/url', (req, res) => {
-    let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDUR + process.env.SCOPE
+    let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDURL + process.env.SCOPE
     res.json({url: url})
 })
 
