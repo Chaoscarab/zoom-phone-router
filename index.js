@@ -377,6 +377,7 @@ app.get('/code', (req, res) => {
             code: req.query.code,
             
         }
+        console.log(params)
         let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
             method: "POST", // or 'PUT'
             headers: {
