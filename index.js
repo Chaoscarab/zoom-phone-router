@@ -431,9 +431,8 @@ app.post('/app', async (req, res) => {
     console.log(req.body)
     const userId = req.body.userId
     try{
-        const read = await readDoc()
+        const read = await readDoc({userId: userId})
         console.log(read)
-        const write = await createDoc(req.body)
         res.sendStatus(200)
     }catch(error){
         console.log(error)
