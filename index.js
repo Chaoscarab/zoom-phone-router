@@ -433,6 +433,7 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc({userId: userId})
         const object = await read[0]
+        console.log(typeof(object))
         console.log(object, 'object')
         var keys = Object.keys(object);
         console.log(keys)
