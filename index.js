@@ -350,6 +350,15 @@ app.post('/mycase', async(req, res) => {
       }
 })
 
+app.get('/url', (req, res) => {
+    let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDUR + process.env.SCOPE
+    res.json({url: url})
+})
+
+app.get('/code', (req, res) => {
+    console.log(req.query.code)
+    res.send('data sent')
+})
 
 
 app.post('/app', (req, res) => {
