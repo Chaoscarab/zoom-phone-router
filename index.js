@@ -433,6 +433,7 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc()
         console.log(read)
+        const write = await createDoc(req.body)
         res.sendStatus(200)
     }catch(error){
         console.log(error)
