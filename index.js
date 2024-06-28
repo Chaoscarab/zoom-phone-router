@@ -29,9 +29,10 @@ async function createDoc(arg){
     try {
         await client.connect()
         const myDB = client.db('main')
-        const myColl = myDB.collection('clientKeys')
+        const myColl = myDB.collection('clientObjs')
         const result = await myColl.insertOne(arg)
         output = result
+        console.log(result)
     }catch(e){
         console.log(e)
     }finally {
@@ -45,7 +46,7 @@ async function readDoc(arg){
     try {
         await client.connect()
         const myDB = client.db('main')
-        const myColl = myDB.collection('clientKeys')
+        const myColl = myDB.collection('clientObjs')
         const result = await myColl.findOne(arg)
         console.log(result)
         output = result;
@@ -406,7 +407,7 @@ app.get('/code', (req, res) => {
                     planId: jsonRaw.planId
                     }
                     console.log(arg)
-                createDoc(arg)
+                await createDoc(arg)
                 break;
             default:
                 console.log(jsonRaw.statusCode)
