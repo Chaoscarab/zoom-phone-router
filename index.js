@@ -382,7 +382,7 @@ app.get('/code', (req, res) => {
             method: "POST", // or 'PUT'
             headers: {
               'Accept': 'application/json',
-              "Content-Type": "aapplication/x-www-form-urlencoded"
+              "Content-Type": "application/x-www-form-urlencoded"
             },
             body:  new URLSearchParams(params)
         })
