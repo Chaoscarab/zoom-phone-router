@@ -156,6 +156,7 @@ app.get('/', async (req, res) =>
 })
 
 app.get('/subscribe', (req, res) => {
+    console.log(path.join(__dirname, "apps","HighLevelAppBoilerplate",  'public', 'index.html'))
      res.sendFile(path.join(__dirname, "apps","HighLevelAppBoilerplate",  'public', 'index.html'))
 
 })
