@@ -441,7 +441,7 @@ app.post('/app', async (req, res) => {
         const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
             method: "GET", // or 'PUT'
             headers: {
-                'Authorization': object.access_token,
+                'Authorization': `Bearer ${object.access_token}`,
                 "Version": '2021-07-28',
               'Accept': 'application/json',
               "Content-Type": "application/json"
