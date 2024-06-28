@@ -29,7 +29,7 @@ async function createDoc(arg){
     try {
         await client.connect()
         const myDB = client.db('main')
-        const myColl = myDB.collection('clientObjs')
+        const myColl = myDB.collection('clientKeys')
         const result = await myColl.insertOne(arg)
         output = result
         console.log(result)
@@ -46,7 +46,7 @@ async function readDoc(arg){
     try {
         await client.connect()
         const myDB = client.db('main')
-        const myColl = myDB.collection('clientObjs')
+        const myColl = myDB.collection('clientKeys')
         const result = await myColl.findOne(arg)
         console.log(result)
         output = result;
@@ -57,6 +57,8 @@ async function readDoc(arg){
         return output;
     }
 }
+
+
 
 app.use(express.json({}))
 
@@ -366,7 +368,61 @@ app.get('/url', (req, res) => {
 
 app.get('/code', (req, res) => {
     console.log(req.query.code)
-    res.send('data sent')
+
+    const getKeys = async () => {
+        let params = {
+            client_id: process.env.CLIENTID,
+            client_secret: process.env.CLIENTSECRET,
+            grant_type:'authorization_code',
+            code: req.query.code,
+            
+        }
+        let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
+            method: "POST", // or 'PUT'
+            headers: {
+              'Accept': 'application/json',
+              "Content-Type": "aapplication/x-www-form-urlencoded"
+            },
+            body:  new URLSearchParams(params)
+        })
+        let jsonRaw = await outResponse.json()
+        console.log(jsonRaw)
+        switch(jsonRaw.statusCode){
+            case 401:
+                console.log(jsonRaw.statusCode)
+                break;
+            case 200:
+                let arg = {
+                    access_token: jsonRaw.access_token,
+                    token_type: jsonRaw.token_type,
+                    expires_in: jsonRaw.expires_in,
+                    refresh_token: jsonRaw.refresh_token,
+                    scope: jsonRaw.scope,
+                    userType: jsonRaw.userType,
+                    locationId: jsonRaw.locationId,
+                    companyId: jsonRaw.companyId,
+                    approvedLocations: jsonRaw.approvedLocations,
+                    userId: jsonRaw.userId,
+                    planId: jsonRaw.planId
+                    }
+                    console.log(arg)
+                createDoc(arg)
+                break;
+            default:
+                console.log(jsonRaw.statusCode)
+                break;
+
+        }
+        
+    }
+    try{
+       getKeys() 
+       res.send('data sent') 
+    }catch(e){
+        console.log(e)
+
+    }
+
 })
 
 
