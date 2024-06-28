@@ -41,13 +41,13 @@ async function createDoc(arg){
     }
 }
 
-async function readDoc(arg){
+async function readDoc(){
     let output;
     try {
         await client.connect()
         const myDB = client.db('main')
         const myColl = myDB.collection('clientObjs')
-        const result = await myColl.findOne(arg)
+        const result = await myColl.findOne()
         console.log(result)
         output = result;
     }catch(e){
@@ -431,7 +431,7 @@ app.post('/app', async (req, res) => {
     console.log(req.body)
     const userId = req.body.userId
     try{
-        const read = await readDoc({userId: userId})
+        const read = await readDoc()
         console.log(read)
         res.sendStatus(200)
     }catch(error){
