@@ -41,13 +41,13 @@ async function createDoc(arg){
     }
 }
 
-async function readDoc(){
+async function readDoc(arg){
     let output;
     try {
         await client.connect()
         const myDB = client.db('main')
         const myColl = myDB.collection('clientObjs')
-        const result = await myColl.findOne()
+        const result = await myColl.findOne(arg)
         console.log(result)
         output = result;
     }catch(e){
@@ -432,8 +432,21 @@ app.post('/app', async (req, res) => {
     const userId = req.body.userId
     try{
         const read = await readDoc({userId: userId})
-        console.log(read)
+        const object = read[0]
+        const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + project.locationId, {
+            method: "GET", // or 'PUT'
+            headers: {
+                'Authorization': object.access_token,
+                "Version": '2021-07-28',
+              'Accept': 'application/json',
+              "Content-Type": "application/json"
+            },
+            credentials: "include",
+        });
+
+        console.log(apiCall.json(), apiCall.status)
         res.sendStatus(200)
+
     }catch(error){
         console.log(error)
     }
