@@ -23,6 +23,7 @@ const client = new MongoClient(uri,  {
 );
 
 
+
 async function createDoc(arg){
     let output;
     try {
@@ -351,7 +352,9 @@ app.post('/mycase', async(req, res) => {
 
 
 
-
+app.post('/app', (req, res) => {
+    
+})
 app.listen(process.env.PORT, () => {
 
 })
