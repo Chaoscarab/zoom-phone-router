@@ -433,8 +433,9 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc({userId: userId})
         const object = await read[0]
-        console.log(object)
-        console.log(object.locationId)
+        console.log(object, 'object')
+        var keys = Object.keys(object);
+        console.log(keys)
         const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
             method: "GET", // or 'PUT'
             headers: {
