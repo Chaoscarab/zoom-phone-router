@@ -147,12 +147,20 @@ if (file.includes('.pdf')) {
 return outString
 } 
 
+app.use(express.static(path.join(__dirname, "apps", "HighLevelAppBoilerplate",  'public' )))
 
 app.get('/', async (req, res) => 
     {
    
     res.sendFile(path.join(__dirname, '/index.html'));
 })
+
+app.get('/subscribe', (req, res) => {
+     res.sendFile(path.join(__dirname, "apps","HighLevelAppBoilerplate",  'public', 'index.html'))
+
+})
+
+
 
 
 //call log array
