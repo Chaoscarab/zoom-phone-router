@@ -427,7 +427,8 @@ app.get('/code', (req, res) => {
 
 
 app.post('/app', async (req, res) => {
-    const {userId} = req.body.userId
+    console.log(req.body)
+    const {userId} = {}
     try{
         const read = await readDoc({userId: userId})
         console.log(read)
