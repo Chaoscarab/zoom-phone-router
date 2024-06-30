@@ -474,6 +474,7 @@ const hlNotesFetch = async (creds, arg) => {
 
 app.post('/app', async (req, res) => {
     console.log(req.body, 'req.body')
+    console.log('req', req)
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.userId
     try{
