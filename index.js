@@ -53,7 +53,6 @@ async function readDoc(arg){
         console.log(e)
     }finally {
         await client.close()
-        console.log(output)
         return output;
     }
 }
@@ -481,9 +480,10 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc({userId: userId})
         console.log(read)
+    
+        let getContact = await hlContactFetch(read, req.body.contact_id)
+        console.log(getContact)
     }catch{}/*
-        
-        let getContact = await hlContactFetch(read, req.body.contactId)
         if(getContact.status === 200){
             const api2 = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + read.locationId, {
                 method: "GET", // or 'PUT'
