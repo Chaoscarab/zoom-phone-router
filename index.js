@@ -49,6 +49,7 @@ async function readDoc(arg){
         const myColl = myDB.collection('clientObjs')
         const result = await myColl.findOne(arg)
         output = result;
+        console.log(arg.userId)
     }catch(e){
         console.log(e)
     }finally {
@@ -407,7 +408,7 @@ app.get('/code', (req, res) => {
                 console.log(jsonRaw.statusCode)
                 break;
             case 200:
-                let arg = {
+                let argObj = {
                     access_token: jsonRaw.access_token,
                     token_type: jsonRaw.token_type,
                     expires_in: jsonRaw.expires_in,
@@ -420,8 +421,8 @@ app.get('/code', (req, res) => {
                     userId: jsonRaw.userId,
                     planId: jsonRaw.planId
                     }
-                    console.log(arg, arg.userId)
-                await createDoc(arg)
+                    console.log(argObj, argObj.userId)
+                await createDoc(argObj)
                 break;
             default:
                 console.log(jsonRaw.statusCode)
