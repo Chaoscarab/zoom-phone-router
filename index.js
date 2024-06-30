@@ -58,6 +58,24 @@ async function readDoc(arg){
     }
 }
 
+async function updateDoc(fieldtoUpdate, updateObject){
+    //fieldtoupdate = {field: 'value'}
+    let output;
+    try {
+        await client.connect()
+    const myDB = client.db('main')
+    const myColl = myDB.collection('clientObjs')
+    const result = await myColl.updateOne(fieldtoUpdate, {$set: updateObject})
+    output = result;
+    }catch(e){
+        console.log(e)
+    }finally {
+        await client.close()
+        console.log(output)
+        return output;
+    }
+}
+
 
 
 app.use(express.json({}))
@@ -367,8 +385,6 @@ app.get('/url', (req, res) => {
 })
 
 app.get('/code', (req, res) => {
-    console.log(req.query.code)
-
     const getKeys = async () => {
         let params = {
             client_id: process.env.CLIENTID,
@@ -428,16 +444,10 @@ app.get('/code', (req, res) => {
 
 
 app.post('/app', async (req, res) => {
-    console.log(req.body)
     const userId = req.body.userId
     try{
         const read = await readDoc({userId: userId})
         const object = read
-        console.log(object)
-        console.log(typeof(object))
-        console.log(object, 'object')
-        var keys = Object.keys(object);
-        console.log(keys)
         const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
             method: "GET", // or 'PUT'
             headers: {
@@ -450,7 +460,81 @@ app.post('/app', async (req, res) => {
         });
         let responseObj = await apiCall.json()
         console.log(responseObj, apiCall.status)
-        res.sendStatus(200)
+        if(apiCall.status === 200){
+             res.sendStatus(200)
+        }else{
+            const refreshKeys = async () => {
+                let params = {
+                    client_id: process.env.CLIENTID,
+                    client_secret: process.env.CLIENTSECRET,
+                    grant_type:'refresh_token',
+                    code: object.refresh_token,
+                    
+                }
+                console.log(params)
+                let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
+                    method: "POST", // or 'PUT'
+                    headers: {
+                      'Accept': 'application/json',
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body:  new URLSearchParams(params)
+                })
+                let jsonRaw = await outResponse.json()
+                console.log(outResponse.status, 'statuscode')
+                switch(outResponse.status){
+                    case 401:
+                        console.log(jsonRaw.statusCode)
+                        break;
+                    case 200:
+                        let arg = {
+                            access_token: jsonRaw.access_token,
+                            token_type: jsonRaw.token_type,
+                            expires_in: jsonRaw.expires_in,
+                            refresh_token: jsonRaw.refresh_token,
+                            scope: jsonRaw.scope,
+                            userType: jsonRaw.userType,
+                            locationId: jsonRaw.locationId,
+                            companyId: jsonRaw.companyId,
+                            approvedLocations: jsonRaw.approvedLocations,
+                            userId: jsonRaw.userId,
+                            planId: jsonRaw.planId
+                            }
+                            console.log(arg)
+                        await updateDoc({userId: userId}, arg)
+                        break;
+                    default:
+                        console.log(jsonRaw.statusCode)
+                        break;
+        
+                }
+
+                await refreshKeys()
+                const read = await readDoc({userId: userId})
+        const object = read
+        const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
+            method: "GET", // or 'PUT'
+            headers: {
+                'Authorization': `Bearer ${object.access_token}`,
+                "Version": '2021-07-28',
+              'Accept': 'application/json',
+              "Content-Type": "application/json"
+            },
+            credentials: "include",
+        });
+        let responseObj = await apiCall.json()
+        console.log(responseObj, apiCall.status)
+                
+            }
+        }
+
+        if(apiCall.status === 200){
+            res.sendStatus(200)
+       }else{
+        res.sendStatus(500)
+       }
+
+       
 
     }catch(error){
         console.log(error)
