@@ -517,12 +517,12 @@ app.post('/app', async (req, res) => {
         
             }
             await refreshKeys()
-            const read = await readDoc({userId: userId})
-                const object = read
-                const updatedAPI = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
+            const readagain= await readDoc({userId: userId})
+                const refeshObject = readagain
+                const updatedAPI = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + refeshObject.locationId, {
                     method: "GET", // or 'PUT'
                     headers: {
-                        'Authorization': `Bearer ${object.access_token}`,
+                        'Authorization': `Bearer ${refeshObject.access_token}`,
                         "Version": '2021-07-28',
                         'Accept': 'application/json',
                         "Content-Type": "application/json"
