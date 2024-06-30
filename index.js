@@ -473,7 +473,7 @@ const hlNotesFetch = async (creds, arg) => {
 
 
 app.post('/app', async (req, res) => {
-    console.log('req.body')
+    console.log('body')
     res.sendStatus(200)
     /*
     //req schema req.body = {userId: <id>, hluserID}
