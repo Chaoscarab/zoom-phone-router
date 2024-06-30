@@ -469,7 +469,7 @@ app.post('/app', async (req, res) => {
                     client_id: process.env.CLIENTID,
                     client_secret: process.env.CLIENTSECRET,
                     grant_type:'refresh_token',
-                    code: object.refresh_token,
+                    refresh_token: object.refresh_token,
                     
                 }
                 console.log(params)
