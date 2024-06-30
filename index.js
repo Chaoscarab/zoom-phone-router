@@ -479,31 +479,14 @@ app.post('/app', async (req, res) => {
     
     try{
         const read = await readDoc({userId: userId})
-        console.log(read)
-    
         let getContact = await hlContactFetch(read, req.body.contact_id)
         console.log(getContact)
-    }catch{}/*
         if(getContact.status === 200){
-            const api2 = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + read.locationId, {
-                method: "GET", // or 'PUT'
-                headers: {
-                    'Authorization': `Bearer ${object.access_token}`,
-                    "Version": '2021-07-28',
-                  'Accept': 'application/json',
-                  "Content-Type": "application/json"
-                },
-                credentials: "include",
-            });
-            let response2 = await api2.json()
-        console.log(response2, api2.status)
-            if(api2.status === 200){
-                res.sendStatus(200)
-            }else{
-                console.log('failed second fetch')
-                res.sendStatus(500)
-            }
-             
+
+            console.log(read.customFields)
+
+
+            
         }else{
             console.log('refreshing keys')
             const refreshKeys = async () => {
@@ -559,23 +542,14 @@ app.post('/app', async (req, res) => {
         
             }
             await refreshKeys()
-            const readagain= await readDoc({userId: userId})
-                const refeshObject = readagain
-                const updatedAPI = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + refeshObject.locationId, {
-                    method: "GET", // or 'PUT'
-                    headers: {
-                        'Authorization': `Bearer ${refeshObject.access_token}`,
-                        "Version": '2021-07-28',
-                        'Accept': 'application/json',
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "include",
-                });
-            let responseRead = await updatedAPI.json()
-            console.log(responseRead, updatedAPI.status)
+            const readagain = await readDoc({userId: userId})
+            let contactFetchagain = await hlContactFetch(readagain, req.body.contact_id)
+
+
+            console.log(contactFetchagain)
                         
 
-            if(updatedAPI.status === 200){
+            if(contactFetchagain.status === 200){
                     res.sendStatus(200)
             }else{
                 res.sendStatus(500)
@@ -590,7 +564,7 @@ app.post('/app', async (req, res) => {
     }catch(error){
         console.log(error)
     }
-        */
+        
     
 })
 app.listen(process.env.PORT, () => {
