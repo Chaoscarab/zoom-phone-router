@@ -483,7 +483,7 @@ app.post('/app', async (req, res) => {
         console.log(getContact)
         if(getContact.status === 200){
 
-            console.log(read.body.contact.customFields)
+            console.log(getContact.body.contact.customFields)
 
 
             
