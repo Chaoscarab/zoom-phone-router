@@ -463,6 +463,7 @@ app.post('/app', async (req, res) => {
         if(apiCall.status === 200){
              res.sendStatus(200)
         }else{
+            console.log('refreshing keys')
             const refreshKeys = async () => {
                 let params = {
                     client_id: process.env.CLIENTID,
@@ -526,13 +527,17 @@ app.post('/app', async (req, res) => {
         console.log(responseObj, apiCall.status)
                 
             }
+
+
+            if(apiCall.status === 200){
+                    res.sendStatus(200)
+            }else{
+                res.sendStatus(500)
+            }
+
         }
 
-        if(apiCall.status === 200){
-            res.sendStatus(200)
-       }else{
-        res.sendStatus(500)
-       }
+        
 
        
 
