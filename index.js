@@ -476,6 +476,9 @@ app.post('/app', async (req, res) => {
     
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.userId
+    console.log(req.body)
+    res.sendStatus(200)
+    /*
     try{
         const read = await readDoc({userId: userId})
         console.log(read)
@@ -587,6 +590,7 @@ app.post('/app', async (req, res) => {
     }catch(error){
         console.log(error)
     }
+        */
     
 })
 app.listen(process.env.PORT, () => {
