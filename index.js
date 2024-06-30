@@ -420,7 +420,7 @@ app.get('/code', (req, res) => {
                     userId: jsonRaw.userId,
                     planId: jsonRaw.planId
                     }
-                    console.log(arg)
+                    console.log(arg, arg.userId)
                 await createDoc(arg)
                 break;
             default:
