@@ -476,7 +476,6 @@ app.post('/app', async (req, res) => {
     
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.contact_id
-    console.log(req.body)
     res.sendStatus(200)
     
     try{
