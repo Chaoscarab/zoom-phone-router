@@ -510,26 +510,30 @@ app.post('/app', async (req, res) => {
         
                 }
 
-                await refreshKeys()
-                const read = await readDoc({userId: userId})
-        const object = read
-        const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
-            method: "GET", // or 'PUT'
-            headers: {
-                'Authorization': `Bearer ${object.access_token}`,
-                "Version": '2021-07-28',
-              'Accept': 'application/json',
-              "Content-Type": "application/json"
-            },
-            credentials: "include",
-        });
-        let responseObj = await apiCall.json()
-        console.log(responseObj, apiCall.status)
                 
+                
+
+        
+        
             }
+            await refreshKeys()
+            const read = await readDoc({userId: userId})
+                const object = read
+                const updatedAPI = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
+                    method: "GET", // or 'PUT'
+                    headers: {
+                        'Authorization': `Bearer ${object.access_token}`,
+                        "Version": '2021-07-28',
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                });
+            let responseRead = await updatedAPI.json()
+            console.log(responseRead, updatedAPI.status)
+                        
 
-
-            if(apiCall.status === 200){
+            if(updatedAPI.status === 200){
                     res.sendStatus(200)
             }else{
                 res.sendStatus(500)
