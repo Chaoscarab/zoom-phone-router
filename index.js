@@ -59,7 +59,6 @@ async function readDoc(arg){
 }
 
 async function updateDoc(fieldtoUpdate, updateObject){
-    //fieldtoupdate = {field: 'value'}
     let output;
     try {
         await client.connect()
@@ -442,16 +441,11 @@ app.get('/code', (req, res) => {
 
 })
 
-
-app.post('/app', async (req, res) => {
-    const userId = req.body.userId
-    try{
-        const read = await readDoc({userId: userId})
-        const object = read
-        const apiCall = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + object.locationId, {
+const hlContactFetch = async (creds, arg) => {
+        const apiCall = await fetch(`https://services.leadconnectorhq.com/contacts/${arg}/?locationId=` + creds.locationId, {
             method: "GET", // or 'PUT'
             headers: {
-                'Authorization': `Bearer ${object.access_token}`,
+                'Authorization': `Bearer ${creds.access_token}`,
                 "Version": '2021-07-28',
               'Accept': 'application/json',
               "Content-Type": "application/json"
@@ -459,9 +453,53 @@ app.post('/app', async (req, res) => {
             credentials: "include",
         });
         let responseObj = await apiCall.json()
-        console.log(responseObj, apiCall.status)
-        if(apiCall.status === 200){
-             res.sendStatus(200)
+        return {body: responseObj, status: apiCall.status}
+}
+
+const hlNotesFetch = async (creds, arg) => {
+    const apiCall = await fetch(`https://services.leadconnectorhq.com/contacts/${arg}/notes/?locationId=` + creds.locationId, {
+        method: "GET", // or 'PUT'
+        headers: {
+            'Authorization': `Bearer ${creds.access_token}`,
+            "Version": '2021-07-28',
+          'Accept': 'application/json',
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+    });
+    let responseObj = await apiCall.json()
+    return {body: responseObj, status: apiCall.status}
+}
+
+
+app.post('/app', async (req, res) => {
+    //req schema req.body = {userId: <id>, hluserID}
+    const userId = req.body.userId
+    try{
+        const read = await readDoc({userId: userId})
+        console.log(read)
+        let getContact = await hlContactFetch(read, req.body.contactId)
+       
+        if(getContact.status === 200){
+            const api2 = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + read.locationId, {
+                method: "GET", // or 'PUT'
+                headers: {
+                    'Authorization': `Bearer ${object.access_token}`,
+                    "Version": '2021-07-28',
+                  'Accept': 'application/json',
+                  "Content-Type": "application/json"
+                },
+                credentials: "include",
+            });
+            let response2 = await api2.json()
+        console.log(response2, api2.status)
+            if(api2.status === 200){
+                res.sendStatus(200)
+            }else{
+                console.log('failed second fetch')
+                res.sendStatus(500)
+            }
+             
         }else{
             console.log('refreshing keys')
             const refreshKeys = async () => {
