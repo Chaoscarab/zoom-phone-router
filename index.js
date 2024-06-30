@@ -478,12 +478,13 @@ app.post('/app', async (req, res) => {
     const userId = req.body.userId
     console.log(req.body)
     res.sendStatus(200)
-    /*
+    
     try{
         const read = await readDoc({userId: userId})
         console.log(read)
+    }catch{}/*
+        
         let getContact = await hlContactFetch(read, req.body.contactId)
-       
         if(getContact.status === 200){
             const api2 = await fetch('https://services.leadconnectorhq.com/contacts/?locationId=' + read.locationId, {
                 method: "GET", // or 'PUT'
