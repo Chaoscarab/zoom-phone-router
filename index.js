@@ -475,7 +475,7 @@ const hlNotesFetch = async (creds, arg) => {
 app.post('/app', async (req, res) => {
     
     //req schema req.body = {userId: <id>, hluserID}
-    const userId = req.body.contact_id
+    const userId = req.body.customData.userId
     res.sendStatus(200)
     
     try{
