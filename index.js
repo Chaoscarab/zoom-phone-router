@@ -495,8 +495,9 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc({userId: userId})
         let getContact = await hlContactFetch(read, req.body.contact_id)
-        //schema is getContact.body.contact.customFields[<array index of file upload field].value
-        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'])
+        //schema to docname is getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname or getContact.body.contact.customFields[<array index>].value[<document key>].meta.originalname
+        //schema to url getContact.body.contact.customFields[<array index>].value[<document key>].url
+        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
             console.log(ffRes.body.notes)
