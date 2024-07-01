@@ -495,7 +495,7 @@ app.post('/app', async (req, res) => {
     try{
         const read = await readDoc({userId: userId})
         let getContact = await hlContactFetch(read, req.body.contact_id)
-        console.log(getContact, 'custom fields:', getContact.body.contact.customFields)
+        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1])
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
             console.log(ffRes.body.notes)
