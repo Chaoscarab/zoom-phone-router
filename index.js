@@ -471,6 +471,20 @@ const hlNotesFetch = async (creds, arg) => {
     return {body: responseObj, status: apiCall.status}
 }
 
+const hlFilesFetch = async (creds) => {
+    const apiCall = await fetch(`https://services.leadconnectorhq.com/medias/files/?altId=` + creds.locationId + "&altType=location&sortBy=createdAt&sortOrder=asc",  {
+        method: "GET", // or 'PUT'
+        headers: {
+            'Authorization': `Bearer ${creds.access_token}`,
+            "Version": '2021-07-28',
+          'Accept': 'application/json',
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+    });
+    let responseObj = await apiCall.json()
+    return {body: responseObj, status: apiCall.status}
+}
 
 app.post('/app', async (req, res) => {
     
@@ -483,7 +497,9 @@ app.post('/app', async (req, res) => {
         let getContact = await hlContactFetch(read, req.body.contact_id)
         console.log(getContact)
         if(getContact.status === 200){
-
+            let ffRes = await hlFilesFetch(read, req.body.contact_id)
+            const ffJson = await ffRes.json()
+            console.log(ffJson)
             console.log(getContact.body.contact.customFields)
 
 
