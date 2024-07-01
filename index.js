@@ -498,9 +498,9 @@ app.post('/app', async (req, res) => {
         console.log(getContact)
         if(getContact.status === 200){
             let ffRes = await hlFilesFetch(read, req.body.contact_id)
-            const ffJson = await ffRes.json()
-            console.log(ffJson)
-            console.log(getContact.body.contact.customFields)
+          
+            console.log(ffRes)
+            
 
 
             
