@@ -487,7 +487,7 @@ const hlFilesFetch = async (creds) => {
 }
 
 app.post('/app', async (req, res) => {
-    
+    console.log("request body:", req.body)
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.customData.userId
     res.sendStatus(200)
