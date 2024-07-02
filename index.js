@@ -495,6 +495,7 @@ const customValsMap = (arg) => {
         if(typeof cvalue.value === 'object'){
             for (const [key, value] of Object.entries(cvalue.value)) {
                 console.log(`${key}: ${value}`);
+                console.log(cvalue.value.key)
               }
         }
         
