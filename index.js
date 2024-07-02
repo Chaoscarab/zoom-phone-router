@@ -486,11 +486,9 @@ const hlFilesFetch = async (creds) => {
     return {body: responseObj, status: apiCall.status}
 }
 
-const customValsMap = (arg) => {
+const customValsFileMap = (arg) => {
     let fileArray = []
     const  fields = arg.body.contact
-    console.log(fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'])
-    console.log(fields.customFields)
     fields.customFields.forEach((cvalue) => {
         if(typeof cvalue.value === 'object'){
             for (const [key, value] of Object.entries(cvalue.value)) {
@@ -511,6 +509,20 @@ const customValsMap = (arg) => {
 return fileArray
 } 
 
+const notesMap = (arg) => {
+    let outArr = []
+    arg.forEach((note) => {
+        let outObj = {
+            body: note.body,
+            dateAdded: note.dateAdded
+        }
+        outArr.push(outObj)
+    })
+    return outArr
+}
+
+
+
 
 
 app.post('/app', async (req, res) => {
@@ -527,14 +539,13 @@ app.post('/app', async (req, res) => {
         
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
-           let values =  customValsMap(getContact)
-           console.log(values, 'values')
 
+           let values =  customValsFileMap(getContact)
+           let notes = notesMap(ffRes.body.notes)
+           console.log(values)
         //console.log(getContact)
         //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
-            
-            console.log(ffRes.body.notes)
-            console.log(ffRes)
+           
             res.sendStatus(200)
             
         }else{
