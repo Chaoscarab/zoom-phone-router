@@ -501,7 +501,7 @@ app.post('/app', async (req, res) => {
     console.log("request body:", req.body)
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.customData.userId
-    res.sendStatus(200)
+    
     
     try{
         const read = await readDoc({userId: userId})
@@ -584,7 +584,7 @@ app.post('/app', async (req, res) => {
                         
 
             if(contactFetchagain.status === 200){
-                    res.sendStatus(200)
+                res.sendStatus(200)
             }else{
                 res.sendStatus(500)
             }
