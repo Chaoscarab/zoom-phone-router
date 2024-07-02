@@ -488,7 +488,7 @@ const hlFilesFetch = async (creds) => {
 
 const customValsMap = (arg) => {
     const  fields = arg.body.contact
-    console.log(fields)
+    console.log(fields.customFields)
     //console.log(fields, 'custom fields:', fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
 
 
@@ -512,8 +512,8 @@ app.post('/app', async (req, res) => {
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
             customValsMap(getContact)
-        console.log(getContact)
-        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
+        //console.log(getContact)
+        //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
             
             console.log(ffRes.body.notes)
             console.log(ffRes)
@@ -575,6 +575,9 @@ app.post('/app', async (req, res) => {
             }
             await refreshKeys(read)
             const readagain = await readDoc({userId: userId})
+
+
+
             let contactFetchagain = await hlContactFetch(readagain, req.body.contact_id)
 
 
