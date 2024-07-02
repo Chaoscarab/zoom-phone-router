@@ -517,9 +517,7 @@ app.post('/app', async (req, res) => {
             
             console.log(ffRes.body.notes)
             console.log(ffRes)
-            
-
-
+            res.sendStatus(200)
             
         }else{
             console.log('refreshing keys')
