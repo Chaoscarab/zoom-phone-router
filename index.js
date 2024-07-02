@@ -493,7 +493,9 @@ const customValsMap = (arg) => {
     console.log(fields.customFields)
     fields.customFields.forEach((cvalue) => {
         if(typeof cvalue.value === 'object'){
-            console.log('object')
+            for (const [key, value] of Object.entries(cvalue.value)) {
+                console.log(`${key}: ${value}`);
+              }
         }
         
     })
