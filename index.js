@@ -508,11 +508,13 @@ app.post('/app', async (req, res) => {
         let getContact = await hlContactFetch(read, req.body.contact_id)
         //schema to docname is getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname or getContact.body.contact.customFields[<array index>].value[<document key>].meta.originalname
         //schema to url getContact.body.contact.customFields[<array index>].value[<document key>].url
-        customValsMap(getContact)
-        console.log(getContact)
-        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
+        
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
+            customValsMap(getContact)
+        console.log(getContact)
+        console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
+            
             console.log(ffRes.body.notes)
             console.log(ffRes)
             
