@@ -487,8 +487,13 @@ const hlFilesFetch = async (creds) => {
 }
 
 const customValsMap = (arg) => {
+    let fileArray = []
     const  fields = arg.body.contact
     console.log(fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'])
+    console.log(fields.customFields)
+    fields.customFields.forEach((cvalue) => {
+        
+    })
     //console.log(fields, 'custom fields:', fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
 
 
