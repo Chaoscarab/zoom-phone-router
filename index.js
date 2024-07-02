@@ -496,14 +496,19 @@ const customValsMap = (arg) => {
             for (const [key, value] of Object.entries(cvalue.value)) {
                 console.log(`${key}: ${value}`);
                 console.log(value)
+                if(value.hasOwnProperty('meta') && value.hasOwnProperty('documentId') && value.hasOwnProperty('url')){
+                    let returnObj = {
+                        fileName: value.meta.originalname,
+                        url: value.url
+                    }
+                    fileArray.push(returnObj)
+                }
               }
         }
         
     })
     //console.log(fields, 'custom fields:', fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
-
-
-    
+return fileArray
 } 
 
 
@@ -522,7 +527,9 @@ app.post('/app', async (req, res) => {
         
         if(getContact.status === 200){
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
-            customValsMap(getContact)
+           let values =  customValsMap(getContact)
+           console.log(values, 'values')
+
         //console.log(getContact)
         //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
             
