@@ -523,12 +523,12 @@ app.post('/app', async (req, res) => {
             
         }else{
             console.log('refreshing keys')
-            const refreshKeys = async () => {
+            const refreshKeys = async (arg) => {
                 let params = {
                     client_id: process.env.CLIENTID,
                     client_secret: process.env.CLIENTSECRET,
                     grant_type:'refresh_token',
-                    refresh_token: object.refresh_token,
+                    refresh_token: arg.refresh_token,
                     
                 }
                 console.log(params)
@@ -575,7 +575,7 @@ app.post('/app', async (req, res) => {
         
         
             }
-            await refreshKeys()
+            await refreshKeys(read)
             const readagain = await readDoc({userId: userId})
             let contactFetchagain = await hlContactFetch(readagain, req.body.contact_id)
 
