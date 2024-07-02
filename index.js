@@ -542,7 +542,7 @@ app.post('/app', async (req, res) => {
 
            let values =  customValsFileMap(getContact)
            let notes = notesMap(ffRes.body.notes)
-           console.log(values)
+           console.log(notes)
         //console.log(getContact)
         //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
            
