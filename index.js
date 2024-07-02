@@ -492,6 +492,9 @@ const customValsMap = (arg) => {
     console.log(fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'])
     console.log(fields.customFields)
     fields.customFields.forEach((cvalue) => {
+        if(typeof cvalue.value === 'object'){
+            console.log('object')
+        }
         
     })
     //console.log(fields, 'custom fields:', fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
