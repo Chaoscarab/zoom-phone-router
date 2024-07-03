@@ -392,7 +392,6 @@ app.get('/code', (req, res) => {
             code: req.query.code,
             
         }
-        console.log(params)
         let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
             method: "POST", // or 'PUT'
             headers: {
@@ -402,7 +401,6 @@ app.get('/code', (req, res) => {
             body:  new URLSearchParams(params)
         })
         let jsonRaw = await outResponse.json()
-        console.log(outResponse, 'statuscode')
         switch(outResponse.status){
             case 401:
                 console.log(jsonRaw.statusCode)
@@ -421,11 +419,11 @@ app.get('/code', (req, res) => {
                     userId: jsonRaw.userId,
                     planId: jsonRaw.planId
                     }
-                    console.log(argObj, argObj.userId)
+                    
                 await createDoc(argObj)
                 break;
             default:
-                console.log(jsonRaw.statusCode)
+                
                 break;
 
         }
@@ -471,29 +469,12 @@ const hlNotesFetch = async (creds, arg) => {
     return {body: responseObj, status: apiCall.status}
 }
 
-const hlFilesFetch = async (creds) => {
-    const apiCall = await fetch(`https://services.leadconnectorhq.com/medias/files/?altId=` + creds.locationId + "&altType=location&sortBy=createdAt&sortOrder=asc",  {
-        method: "GET", // or 'PUT'
-        headers: {
-            'Authorization': `Bearer ${creds.access_token}`,
-            "Version": '2021-07-28',
-          'Accept': 'application/json',
-          "Content-Type": "application/json"
-        },
-        credentials: "include",
-    });
-    let responseObj = await apiCall.json()
-    return {body: responseObj, status: apiCall.status}
-}
-
 const customValsFileMap = (arg) => {
     let fileArray = []
     const  fields = arg.body.contact
     fields.customFields.forEach((cvalue) => {
         if(typeof cvalue.value === 'object'){
             for (const [key, value] of Object.entries(cvalue.value)) {
-                console.log(`${key}: ${value}`);
-                console.log(value)
                 if(value.hasOwnProperty('meta') && value.hasOwnProperty('documentId') && value.hasOwnProperty('url')){
                     let returnObj = {
                         fileName: value.meta.originalname,
@@ -521,6 +502,32 @@ const notesMap = (arg) => {
     return outArr
 }
 
+const myCaseUpload = async (files, notes, caseId) => {
+      let promiseField = []
+
+      files.forEach((file) => {
+        let outObj = { id: caseId, file: file.url, filename: file.fileName };
+        let zapRes1 = fetchFunc(outObj, process.env.MKDOCMYCSZAP)
+        promiseField.push(zapRes1)
+      })
+
+      notes.forEach((note) => {
+        //body: note.body, dateAdded: note.dateAdded
+        let outObj = { id: caseId,  notes: note.body, date: note.dateAdded};
+        let zapResNotes = fetchFunc(outObj, process.env.MKNOTEMYCSZAP);
+        promiseField.push(zapResNotes);
+      })
+
+      try{
+        await Promise.all(promiseField)
+        console.log('allpromises complete')
+        return 200
+      }catch (e){
+        console.log(e)
+        return e
+      }
+}
+
 
 
 
@@ -542,7 +549,9 @@ app.post('/app', async (req, res) => {
 
            let values =  customValsFileMap(getContact)
            let notes = notesMap(ffRes.body.notes)
-           console.log(notes)
+           console.log(values, notes)
+
+           
         //console.log(getContact)
         //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
            
