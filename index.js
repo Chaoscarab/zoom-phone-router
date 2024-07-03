@@ -629,17 +629,14 @@ app.post('/app', async (req, res) => {
                let mycaseUpload = await myCaseUpload(values, notes, mycaseId)
                if(mycaseUpload === 200){
                 res.sendStatus(200)
-               }else{
-                console.log('issue with mycaseUpload')
-                res.sendStatus(500)
-               }
-                        
-
-            if(contactFetchagain.status === 200){
-                res.sendStatus(200)
             }else{
                 res.sendStatus(500)
             }
+            }else{
+
+                res.sendStatus(500)
+            }
+                        
 
         }
 
