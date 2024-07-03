@@ -522,7 +522,7 @@ const myCaseUpload = async (files, notes, caseId) => {
         return 200
       }catch (e){
         console.log(e)
-        return e
+        return 500
       }
 }
 
@@ -535,7 +535,7 @@ app.post('/app', async (req, res) => {
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.customData.userId
     let mycaseId = req.body['MyCase ID']
-    console.log(mycaseId)
+   
     
     try{
         const read = await readDoc({userId: userId})
@@ -548,13 +548,19 @@ app.post('/app', async (req, res) => {
 
            let values =  customValsFileMap(getContact)
            let notes = notesMap(ffRes.body.notes)
-           console.log(values, notes)
+           let mycaseUpload = await myCaseUpload(values, notes, mycaseId)
+           if(mycaseUpload === 200){
+            res.sendStatus(200)
+           }else{
+            console.log('issue with mycaseUpload')
+            res.sendStatus(500)
+           }
 
            
         //console.log(getContact)
         //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
            
-            res.sendStatus(200)
+            
             
         }else{
             console.log('refreshing keys')
@@ -615,7 +621,18 @@ app.post('/app', async (req, res) => {
 
 
             let contactFetchagain = await hlContactFetch(readagain, req.body.contact_id)
-
+            if(contactFetchagain.status === 200){
+                let ffRes = await hlNotesFetch(read, req.body.contact_id)
+    
+               let values =  customValsFileMap(contactFetchagain)
+               let notes = notesMap(ffRes.body.notes)
+               let mycaseUpload = await myCaseUpload(values, notes, mycaseId)
+               if(mycaseUpload === 200){
+                res.sendStatus(200)
+               }else{
+                console.log('issue with mycaseUpload')
+                res.sendStatus(500)
+               }
                         
 
             if(contactFetchagain.status === 200){
