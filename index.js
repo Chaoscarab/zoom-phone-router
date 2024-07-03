@@ -502,7 +502,7 @@ const notesMap = (arg) => {
 
 const myCaseUpload = async (files, notes, caseId) => {
       let promiseField = []
-
+console.log(files, notes)
       files.forEach((file) => {
         let outObj = { id: caseId, file: file.url, filename: file.fileName };
         let zapRes1 = fetchFunc(outObj, process.env.MKDOCMYCSZAP)
