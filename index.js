@@ -32,7 +32,6 @@ async function createDoc(arg){
         const myColl = myDB.collection('clientObjs')
         const result = await myColl.insertOne(arg)
         output = result
-        console.log(result)
     }catch(e){
         console.log(e)
     }finally {
@@ -49,7 +48,6 @@ async function readDoc(arg){
         const myColl = myDB.collection('clientObjs')
         const result = await myColl.findOne(arg)
         output = result;
-        console.log(arg.userId)
     }catch(e){
         console.log(e)
     }finally {
@@ -597,7 +595,6 @@ app.post('/app', async (req, res) => {
                             userId: jsonRaw.userId,
                             planId: jsonRaw.planId
                             }
-                            console.log(arg)
                         await updateDoc({userId: userId}, arg)
                         break;
                     default:
@@ -619,8 +616,6 @@ app.post('/app', async (req, res) => {
 
             let contactFetchagain = await hlContactFetch(readagain, req.body.contact_id)
 
-
-            console.log(contactFetchagain)
                         
 
             if(contactFetchagain.status === 200){
