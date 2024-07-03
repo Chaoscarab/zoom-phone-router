@@ -536,7 +536,8 @@ app.post('/app', async (req, res) => {
     console.log("request body:", req.body)
     //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.customData.userId
-    
+    let mycaseId = req.body['MyCase ID']
+    console.log(mycaseId)
     
     try{
         const read = await readDoc({userId: userId})
