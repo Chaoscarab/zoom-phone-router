@@ -657,11 +657,31 @@ app.post('/mycasemisc', async (req, res) => {
 
     console.log("parsed obj", parseObj)
     console.log(req.body)
-
-
-    //add url to env
-    //let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
-    res.sendStatus(200)
+    if(parseObj === false){
+        let hlError = await fetchFunc({
+            CaseID: req.body.email,
+            Message: "invalid mycase ID",
+            PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
+    }else{
+    let outObj = req.body
+    outObj.customData = parseObj
+    try{
+        let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
+        res.sendStatus(200)
+    }catch{
+        try{
+            let hlError = await fetchFunc({
+                CaseID: req.body.email,
+                Message: "server miscdata upload Error",
+                PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
+        }catch{
+            throw new Error()
+        }
+    }
+    }
+    
+    
+    
 
 })
 

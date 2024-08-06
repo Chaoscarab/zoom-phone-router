@@ -16,7 +16,7 @@ const mycaseParse = async (inputData) => {
     ]
 
 
-    let outObj = {dob: "01/01/1875", spousedob: "01/01/1875", mycaseID: "F", dateOfDeath: "01/01/1875", ssn: "00000000", spousessn: '000-00-0000', email: inputData.email}
+    let outObj = {dob: "01/01/1875", spousedDob: "01/01/1875", mycaseID: "F", dateOfDeath: "01/01/1875", ssn: "00000000", spousessl: '000-00-0000', email: inputData.email}
     
         
     if(mycaseId.toString().length === 8){
