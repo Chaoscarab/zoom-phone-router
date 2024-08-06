@@ -90,7 +90,7 @@ const mycaseParse = async (inputData) => {
         return ssnFix
     }
 
-    outObj.spousessn = ssnParse(spousessn)
+    outObj.spousessl = ssnParse(spousessn)
     outObj.ssn = ssnParse(ssn)
 
 if(outObj.mycaseID === 'F'){
