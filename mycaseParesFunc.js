@@ -45,7 +45,8 @@ const mycaseParse = async (inputData) => {
     
     const datetoIOS = (arg) => {
         arg = arg.replaceAll(',', '')
-        if(arg === '' || " "){
+        if(arg === '' || arg === " "){
+            console.log("empty string")
             return ''
         }else{
             if(hasWhiteSpace(arg)){
