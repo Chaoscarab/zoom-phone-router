@@ -654,6 +654,7 @@ app.post('/app', async (req, res) => {
 
 app.post('/mycasemisc', async (req, res) => {
     let parseObj = mycaseParse(req.body.customData)
+    console.log(parseObj)
     res.sendStatus(200)
 
 })
