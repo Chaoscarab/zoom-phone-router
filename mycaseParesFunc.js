@@ -72,9 +72,7 @@ const mycaseParse = async (inputData) => {
                 
                 output += '/' + outdob[2]
             console.log("output", output)
-                let dobObj= new Date(
-                    "01/01/2000"
-                   // output
+                let dobObj= new Date(output
                 )
             return dobObj.toISOString();
             }else{
