@@ -654,7 +654,13 @@ app.post('/app', async (req, res) => {
 
 app.post('/mycasemisc', async (req, res) => {
     let parseObj = mycaseParse(req.body.customData)
-    console.log(parseObj)
+
+    console.log("parsed obj", parseObj)
+    console.log(req.body)
+
+
+    //add url to env
+    //let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
     res.sendStatus(200)
 
 })

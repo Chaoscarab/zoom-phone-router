@@ -46,11 +46,9 @@ const mycaseParse = async (inputData) => {
     const datetoIOS = (arg) => {
         arg = arg.replaceAll(',', '')
         if(arg === '' || arg === " "){
-            console.log("empty string")
             return ''
         }else{
             if(hasWhiteSpace(arg)){
-                console.log('has white space')
                 let output = ''
                 console.log('argument', arg)
                 let outdob = arg.split(' ')
@@ -62,21 +60,16 @@ const mycaseParse = async (inputData) => {
                     const regex = /\d+(st|nd|rd|th)\b/;
                     return regex.test(str);
                   }
-                  console.log("outdob:", outdob)
-                  console.log("conainsOrdinals:", containsOrdinal(outdob[1]))
                   if(containsOrdinal(outdob[1])){
                     output += ordinals.findIndex((arg) => arg.includes(outdob[1])) + 1
                   }else{
                     output += outdob[1] 
-                    console.log(output)
                   }
                 
                 output += '/' + outdob[2]
-            console.log("output", output)
                 let dobObj= new Date(output)
             return dobObj.toISOString();
             }else{
-                console.log('nowhitespace', arg)
                 let dobObj= new Date(dob)
                 return  dobObj.toISOString();
             }
@@ -85,11 +78,9 @@ const mycaseParse = async (inputData) => {
     }
 
 
-     console.log("dob: ", dob)
     outObj.dob = datetoIOS(dob)
-    console.log("spousedob: ",spousedob)
+
     outObj.spousedob = datetoIOS(spousedob)
-    console.log("dod: ",dod)
     outObj.dateOfDeath = datetoIOS(dod)
 
 
@@ -101,7 +92,6 @@ const mycaseParse = async (inputData) => {
     outObj.spousessn = ssnParse(spousessn)
     outObj.ssn = ssnParse(ssn)
 
-console.log(outObj)
 if(outObj.mycaseID === 'F'){
     return false
 }else{
