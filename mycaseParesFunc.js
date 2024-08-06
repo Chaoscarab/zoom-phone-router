@@ -59,10 +59,13 @@ const mycaseParse = async (inputData) => {
                     const regex = /\d+(st|nd|rd|th)\b/;
                     return regex.test(str);
                   }
+                  console.log("outdob:", outdob)
+                  console.log("conainsOrdinals:", containsOrdinal(outdob[1]))
                   if(containsOrdinal(outdob[1])){
                     output += ordinals.findIndex((arg) => arg.includes(outdob[1])) + 1
                   }else{
                     output += outdob[1] 
+                    console.log(output)
                   }
                 
                 output += '/' + outdob[2]
