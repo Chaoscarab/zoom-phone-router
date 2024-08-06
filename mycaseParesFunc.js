@@ -23,10 +23,6 @@ const mycaseParse = async (inputData) => {
     }else{
        outObj.mycaseID = "F"
     }
-    
-    
-    
-    
     function hasWhiteSpace(s) 
     {
     if(typeof s != 'string'){
@@ -47,65 +43,35 @@ const mycaseParse = async (inputData) => {
         return true;
     }
     
-    
-    
-    
-    if(hasWhiteSpace(dob)){
-      let output = ''
-      let outdob = dob.split(' ')
-      //[jan, 1st, 1990]
-      output += months.findIndex((arg) => arg === outdob[0] ) + 1
-      output += '/'
-      output += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
-      output += '/' + outdob[2]
-    
-      let dobObj= new Date(output)
-    outObj.dob = dobObj.toISOString();
-    }else{
+    const datetoIOS = (arg) => {
+        if(arg = ''){
+            return ''
+        }else{
+            if(hasWhiteSpace(arg)){
+                let output = ''
+                let outdob = dob.split(' ')
+                //[jan, 1st, 1990]
+                output += months.findIndex((arg) => arg === outdob[0] ) + 1
+                output += '/'
+                output += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
+                output += '/' + outdob[2]
+            
+                let dobObj= new Date(output)
+            return dobObj.toISOString();
+            }else{
+                
+                let dobObj= new Date(dob)
+                return  dobObj.toISOString();
+            }
+        }
         
-        let dobObj= new Date(dob)
-        outObj.dob = dobObj.toISOString();
     }
+     
+    outObj.dob = datetoIOS(dob)
     
-    if(hasWhiteSpace(spousedob)){
-        let sOutput = ''
-        let outdob = spousedob.split(' ')
-        //[jan, 1st, 1990]
-        sOutput += months.findIndex((arg) => arg === outdob[0] ) + 1
-        sOutput += '/'
-        sOutput += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
-        sOutput += '/' + outdob[2]
-        let dobObj = new Date(sOutput)
-        outObj.spousedob  = dobObj.toISOString();
-        
-      }else{
-          console.log('no white space')
-        let spouseObj = new Date(spousedob);
-          outObj.spousedob = spouseObj.toISOString();
-      }
+    outObj.spousedob = datetoIOS(spousedob)
     
-    
-    if(hasWhiteSpace(dod)){
-        let sOutput = ''
-        let outdob = dod.split(' ')
-        //[jan, 1st, 1990]
-        sOutput += months.findIndex((arg) => arg === outdob[0] ) + 1
-        sOutput += '/'
-        sOutput += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
-        sOutput += '/' + outdob[2]
-        let dobObj = new Date(sOutput)
-        outObj.dateOfDeath= dobObj.toISOString();
-        
-      }else{
-          console.log('no white space')
-        let dodObj = new Date(dod);
-          outObj.dateOfDeath = dodObj.toISOString();
-      }
-    
-    let ssnFix = ssn.toString().replace('-', '')
-    ssnFix = ssnFix.replace('-', '')
-    ssnFix = ssnFix.replace('-', '')
-    outObj.ssn = ssnFix
+    outObj.dateOfDeath = datetoIOS(dod)
 
 
     const ssnParse = (arg) => {
