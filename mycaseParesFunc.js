@@ -81,7 +81,7 @@ const mycaseParse = async (inputData) => {
 
     outObj.dob = datetoIOS(dob)
 
-    outObj.spousedob = datetoIOS(spousedob)
+    outObj.spousedDob = datetoIOS(spousedob)
     outObj.dateOfDeath = datetoIOS(dod)
 
 
