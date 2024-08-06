@@ -55,8 +55,11 @@ const mycaseParse = async (inputData) => {
                 output += '/'
                 output += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
                 output += '/' + outdob[2]
-            
-                let dobObj= new Date(output)
+            console.log(output)
+                let dobObj= new Date(
+                    "01/01/2000"
+                   // output
+                )
             return dobObj.toISOString();
             }else{
                 
@@ -66,6 +69,8 @@ const mycaseParse = async (inputData) => {
         }
         
     }
+
+
      console.log(dob)
     outObj.dob = datetoIOS(dob)
     console.log(spousedob)
