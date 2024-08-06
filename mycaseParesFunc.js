@@ -51,9 +51,9 @@ const mycaseParse = async (inputData) => {
                 let output = ''
                 let outdob = dob.split(' ')
                 //[jan, 1st, 1990]
-                output += months.findIndex((arg) => arg === outdob[0] ) + 1
+                output += months.findIndex((arg) => arg.includes(outdob[0])) + 1
                 output += '/'
-                output += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
+                output += ordinals.findIndex((arg) => arg.includes(outdob[1])) + 1
                 output += '/' + outdob[2]
             console.log("output", output)
                 let dobObj= new Date(
