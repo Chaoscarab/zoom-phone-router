@@ -48,6 +48,7 @@ const mycaseParse = async (inputData) => {
             return ''
         }else{
             if(hasWhiteSpace(arg)){
+                console.log('has white space')
                 let output = ''
                 let outdob = dob.split(' ')
                 //[jan, 1st, 1990]
