@@ -55,7 +55,7 @@ const mycaseParse = async (inputData) => {
                 output += '/'
                 output += ordinals.findIndex((arg) => arg === outdob[1] ) + 1
                 output += '/' + outdob[2]
-            console.log(output)
+            console.log("output", output)
                 let dobObj= new Date(
                     "01/01/2000"
                    // output
@@ -71,11 +71,11 @@ const mycaseParse = async (inputData) => {
     }
 
 
-     console.log(dob)
+     console.log("dob: ", dob)
     outObj.dob = datetoIOS(dob)
-    console.log(spousedob)
+    console.log("spousedob: ",spousedob)
     outObj.spousedob = datetoIOS(spousedob)
-    console.log(dod)
+    console.log("dod: ",dod)
     outObj.dateOfDeath = datetoIOS(dod)
 
 
