@@ -667,6 +667,7 @@ app.post('/mycasemisc', async (req, res) => {
     outObj.customData = parseObj
     try{
         let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
+        console.log(zapRes1)
         res.sendStatus(200)
     }catch{
         try{
