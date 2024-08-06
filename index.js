@@ -6,6 +6,7 @@ const https = require('https');
 const fs = require('fs');
 const crypto = require('crypto');
 const { MongoClient, ServerApiVersion,} = require("mongodb");
+const mycaseParse = require('./mycaseParesFunc')
 
 //initializing express app
 const app = express()
@@ -653,6 +654,8 @@ app.post('/app', async (req, res) => {
 
 app.post('/mycasemisc', async (req, res) => {
     console.log("request body:", req.body)
+    let parseObj = mycaseParse(req.body.customData)
+    console.log(parseObj)
     res.sendStatus(200)
 
 })
