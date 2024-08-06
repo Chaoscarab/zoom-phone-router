@@ -55,7 +55,7 @@ const mycaseParse = async (inputData) => {
                 console.log('argument', arg)
                 let outdob = arg.split(' ')
                 //[jan, 1st, 1990]
-                output += months.findIndex((arg) => arg.includes(outdob[0])) + 1
+                output += months.findIndex((arg) => outdob[0].includes(arg)) + 1
                 output += '/'
                 
                 function containsOrdinal(str) {
