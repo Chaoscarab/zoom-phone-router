@@ -44,6 +44,7 @@ const mycaseParse = async (inputData) => {
     }
     
     const datetoIOS = (arg) => {
+        arg = arg.replaceAll(',', '')
         if(arg === ''){
             return ''
         }else{
