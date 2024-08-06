@@ -87,7 +87,7 @@ const mycaseParse = async (inputData) => {
     outObj.spousessn = ssnParse(spousessn)
     outObj.ssn = ssnParse(ssn)
 
-
+console.log(outObj)
 if(outObj.mycaseID === 'F'){
     return false
 }else{
