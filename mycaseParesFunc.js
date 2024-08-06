@@ -45,7 +45,7 @@ const mycaseParse = async (inputData) => {
     
     const datetoIOS = (arg) => {
         arg = arg.replaceAll(',', '')
-        if(arg === ''){
+        if(arg === '' || " "){
             return ''
         }else{
             if(hasWhiteSpace(arg)){
@@ -72,8 +72,7 @@ const mycaseParse = async (inputData) => {
                 
                 output += '/' + outdob[2]
             console.log("output", output)
-                let dobObj= new Date(output
-                )
+                let dobObj= new Date(output)
             return dobObj.toISOString();
             }else{
                 console.log('nowhitespace', arg)
