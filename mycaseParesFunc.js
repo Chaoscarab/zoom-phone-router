@@ -62,7 +62,7 @@ const mycaseParse = async (inputData) => {
                 )
             return dobObj.toISOString();
             }else{
-                
+                console.log('nowhitespace', arg)
                 let dobObj= new Date(dob)
                 return  dobObj.toISOString();
             }
