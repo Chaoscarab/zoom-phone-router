@@ -650,6 +650,13 @@ app.post('/app', async (req, res) => {
         
     
 })
+
+app.post('/mycasemisc', async (req, res) => {
+    console.log("request body:", req.body)
+    res.sendStatus(200)
+
+})
+
 app.listen(process.env.PORT, () => {
 
 })
