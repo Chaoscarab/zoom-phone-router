@@ -125,5 +125,5 @@ if(outObj.mycaseID === 'F'){
 
 } 
 
-export default mycaseParse
+module.exports = mycaseParse
 
