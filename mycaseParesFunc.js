@@ -53,6 +53,25 @@ const mycaseParse = async (inputData) => {
                 //[jan, 1st, 1990]
                 output += months.findIndex((arg) => arg.includes(outdob[0])) + 1
                 output += '/'
+                
+                function containsOrdinal(str) {
+                    const regex = /\d+(st|nd|rd|th)\b/;
+                    return regex.test(str);
+                  }
+                  
+                  // Test cases
+
+                  
+                  console.log(containsOrdinal("2")); // false
+                  console.log(containsOrdinal("2nd")); // true
+                  console.log(containsOrdinal("3rd place")); // true
+                  console.log(containsOrdinal("4th of July")); // true
+                  console.log(containsOrdinal("21st century")); // true
+                  console.log(containsOrdinal("just a string")); // false
+                  console.log(containsOrdinal("sth")); // false (no number before)
+                  console.log(containsOrdinal(outdob[1]))
+
+
                 output += ordinals.findIndex((arg) => arg.includes(outdob[1])) + 1
                 output += '/' + outdob[2]
             console.log("output", output)
