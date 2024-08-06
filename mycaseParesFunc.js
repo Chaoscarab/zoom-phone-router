@@ -50,6 +50,7 @@ const mycaseParse = async (inputData) => {
             if(hasWhiteSpace(arg)){
                 console.log('has white space')
                 let output = ''
+                console.log('argument', arg)
                 let outdob = dob.split(' ')
                 //[jan, 1st, 1990]
                 output += months.findIndex((arg) => arg.includes(outdob[0])) + 1
