@@ -50,6 +50,8 @@ const mycaseParse = async (inputData) => {
         if(arg === '' || arg === " "){
             return ''
         }else{
+            console.log("arg", arg)
+            console.log(hasWhiteSpace(arg))
             if(hasWhiteSpace(arg)){
                 let output = ''
                 console.log('argument', arg)
