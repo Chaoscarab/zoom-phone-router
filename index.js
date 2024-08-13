@@ -155,8 +155,8 @@ app.get('/subscribe', (req, res) => {
 })
 
 
-const tZandNmParser = (arg) => {
-    let outObj = {type: 'ringing'}
+const tZandNmParser = (arg, arg2) => {
+    let outObj = {type: arg2}
     if(arg.hasOwnProperty('name')){
         outObj.name = arg.name
     }else{
@@ -208,7 +208,7 @@ app.post('/webhook', async (req, res) => {
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
         return res.sendStatus(200)
     }else if(req.body.event === 'phone.callee_missed'){
-        let fetchObj = tZandNmParser(req.body.payload.object.caller)
+        let fetchObj = tZandNmParser(req.body.payload.object.caller, "missed")
         console.log("tZandNMParser fetchobj",fetchObj)
             try{
                 //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
@@ -225,7 +225,7 @@ app.post('/webhook', async (req, res) => {
         let output = zoomMissedParser(req.body)
         console.log("zoomMissedParser", output)
         if(output){
-            let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller)
+            let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
             console.log("fetchZoomMissed", fetchZoomMissed)
             try{
             //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
