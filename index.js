@@ -176,7 +176,7 @@ const callPromise = async (arg) => {
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
-    console.log(req.body)
+    console.log(JSON.stringify(req.body, null, 4));
   /*  console.log(callLog.length, 'callLog length')
     console.log(callLog.indexOf(req.body.payload.object.callee.phone_number) === -1)
     console.log('req.body', req.body, req.body.payload.object.callee )

@@ -7,6 +7,7 @@ const mycaseParse = async (inputData) => {
     const dod = inputData.dateOfDeath
     const ssn = inputData.ssn
     const mycaseId = inputData.mycaseID
+    //suported date formates: Feb 1st, 2024, 2024-02-01, 02/01/2024, febuary 1, 2024
     
     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     let ordinals = [
@@ -50,7 +51,6 @@ const mycaseParse = async (inputData) => {
 
                 }else{
                 let output = ''
-                console.log('argument', arg)
                 let outdob = arg.split(' ')
                 //[jan, 1st, 1990]
                 output += months.findIndex((arg) => outdob[0].includes(arg)) + 1
@@ -67,7 +67,6 @@ const mycaseParse = async (inputData) => {
                   }
                 
                 output += '/' + outdob[2]
-                console.log("date output", output)
                 let dobObj= new Date(output)
             return dobObj.toISOString();
            } }else{
