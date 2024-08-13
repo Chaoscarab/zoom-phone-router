@@ -195,7 +195,8 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log('webhook hit')
+    console.log('webhook hit', )
+    console.log(JSON.stringify(req.body, null, 4))
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -205,43 +206,41 @@ app.post('/webhook', async (req, res) => {
         })
         
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
-        res.sendStatus(200)
+        return res.sendStatus(200)
     }else if(req.body.event === 'phone.callee_missed'){
         let fetchObj = tZandNmParser(req.body.payload.object.caller)
         console.log("tZandNMParser fetchobj",fetchObj)
             try{
                 //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
-                res.sendStatus(200)
+               return  res.sendStatus(200)
             }catch(e){
                 try{
                     //add zoom inbound errer workflow
                    // await fetchFunc({message: 'failed missed call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
-                    res.sendStatus(200)
                 }catch(e){
                     throw new Error(e)
                 }
             }
-            
-        
-        res.sendStatus(200)
     }else if (req.body.event === 'phone.callee_ringing'){ 
-    let output = zoomMissedParser(req.body)
-    console.log("zoomMissedParser", output)
-    if(output){
-        let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller)
-        console.log("fetchZoomMissed", fetchZoomMissed)
-        try{
-           //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
-           res.sendStatus(200)
-        }catch{
+        let output = zoomMissedParser(req.body)
+        console.log("zoomMissedParser", output)
+        if(output){
+            let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller)
+            console.log("fetchZoomMissed", fetchZoomMissed)
             try{
-              //  await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
-            }catch(e){
-                //throw new Error(e)
+            //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
+            res.sendStatus(200)
+            }catch{
+                try{
+                //  await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+                }catch(e){
+                    //throw new Error(e)
+                }
             }
         }
+    }else{
+    res.sendStatus(200)
     }
-}
 })
 
 
