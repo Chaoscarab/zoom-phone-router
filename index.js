@@ -201,6 +201,7 @@ const callPromise = async (arg) => {
 
 //zoom webhook
 app.post('/webhook', (req, res) => {
+    console.log(req.body)
   /*  console.log(callLog.length, 'callLog length')
     console.log(callLog.indexOf(req.body.payload.object.callee.phone_number) === -1)
     console.log('req.body', req.body, req.body.payload.object.callee )
@@ -255,127 +256,6 @@ app.post('/webhook', (req, res) => {
 })
 
 
-//send to mycase outbound
-app.post('/mycase', async(req, res) => {
-
-    console.log('mycase body:', req.body)
-    const {
-        mycaseId,
-        name,
-        email,
-        phone,
-        file1name,
-        file2name,
-        file3name,
-        file4name,
-        file5name,
-        file6name,
-        file7name,
-        file8name,
-        file9name,
-        file10name,
-        file1,
-        file2,
-        file3,
-        file4,
-        file5,
-        file6,
-        file7,
-        file8,
-        file9,
-        file10,
-        notes,
-        notesCFCK
-      } = req.body
-      let promiseField = []
-
-      if (file1 !== 'null') {
-        let file1Name = fileExtensionAppender(file1, file1name);
-        let outObj = { id: mycaseId, phone: phone, file: file1, filename: file1Name };
-        let zapRes1 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        console.log(zapRes1)
-        promiseField.push(zapRes1);
-      }
-      
-      if (file2 !== 'null') {
-        let file2Name = fileExtensionAppender(file2, file2name);
-        let outObj = { id: mycaseId, phone: phone, file: file2, filename: file2Name };
-        let zapRes2 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes2);
-      }
-      
-      if (file3 !== 'null') {
-        let file3Name = fileExtensionAppender(file3, file3name);
-        let outObj = { id: mycaseId, phone: phone, file: file3, filename: file3Name };
-        let zapRes3 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes3);
-      }
-      
-      if (file4 !== 'null') {
-        let file4Name = fileExtensionAppender(file4, file4name);
-        let outObj = { id: mycaseId, phone: phone, file: file4, filename: file4Name };
-        let zapRes4 =  fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes4);
-      }
-      
-      if (file5 !== 'null') {
-        let file5Name = fileExtensionAppender(file5, file5name);
-        let outObj = { id: mycaseId, phone: phone, file: file5, filename: file5Name };
-        let zapRes5 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes5);
-      }
-      
-      if (file6 !== 'null') {
-        let file6Name = fileExtensionAppender(file6, file6name);
-        let outObj = { id: mycaseId, phone: phone, file: file6, filename: file6Name };
-        let zapRes6 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes6);
-      }
-      
-      if (file7 !== 'null') {
-        let file7Name = fileExtensionAppender(file7, file7name);
-        let outObj = { id: mycaseId, phone: phone, file: file7, filename: file7Name };
-        let zapRes7 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes7);
-      }
-      
-      if (file8 !== 'null') {
-        let file8Name = fileExtensionAppender(file8, file8name);
-        let outObj = { id: mycaseId, phone: phone, file: file8, filename: file8Name };
-        let zapRes8 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes8);
-      }
-      
-      if (file9 !== 'null') {
-        let file9Name = fileExtensionAppender(file9, file9name);
-        let outObj = { id: mycaseId, phone: phone, file: file9, filename: file9Name };
-        let zapRes9 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes9);
-      }
-      
-      if (file10 !== 'null') {
-        let file10Name = fileExtensionAppender(file10, file10name);
-        let outObj = { id: mycaseId, phone: phone, file: file10, filename: file10Name };
-        let zapRes10 = fetchFunc(outObj, process.env.MKDOCMYCSZAP);
-        promiseField.push(zapRes10);
-      }
-      if (notes !== 'null') {
-        const event = new Date('05 October 2011 14:48 UTC');
-        let date = event.toString()
-        let outObj = { id: mycaseId, phone: phone, notes: notes, date: date};
-        let zapResNotes = fetchFunc(outObj, process.env.MKNOTEMYCSZAP);
-        promiseField.push(zapResNotes);
-      }
-
-      try{
-        await Promise.all(promiseField)
-        console.log('allpromises complete')
-        res.sendStatus(200)
-      }catch (e){
-        console.log(e)
-        res.sendStatus(500)
-      }
-})
 
 app.get('/url', (req, res) => {
     let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDURL + process.env.SCOPE
@@ -655,8 +535,6 @@ app.post('/app', async (req, res) => {
 app.post('/mycasemisc', async (req, res) => {
     let parseObj = await mycaseParse(req.body.customData)
 
-    console.log("parsed obj", parseObj)
-    console.log(req.body)
     if(parseObj === false){
         let hlError = await fetchFunc({
             CaseID: req.body.email,
@@ -666,9 +544,9 @@ app.post('/mycasemisc', async (req, res) => {
     let outObj = req.body
     outObj.customData = parseObj
     try{
-        console.log("outObj", outObj, "req.body", req.body)
+        
         let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
-        console.log(zapRes1)
+        
         res.sendStatus(200)
     }catch{
         try{
