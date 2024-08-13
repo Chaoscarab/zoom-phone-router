@@ -82,7 +82,7 @@ app.use(express.json({}))
 ///HTTPSPORT
 //process.env.SECRETKEY
 
-
+/** 
     function objectParser(arg, arg2){
     let outObj = {}
     outObj.type = arg2
@@ -111,7 +111,7 @@ app.use(express.json({}))
     return outObj
 
     }
-
+*/
 async function fetchFunc(object, url){
     try{
         const rawResponse = await fetch(url,{
@@ -155,7 +155,97 @@ app.get('/subscribe', (req, res) => {
 })
 
 
+const tZandNmParser = (arg) => {
+    let outObj = {type: 'ringing'}
+    if(arg.hasOwnProperty('name')){
+        outObj.name = arg.name
+    }else{
+        outObj.name = 'none'
+    }
+    if(arg.hasOwnProperty('timezone')){
+       
+        outObj.timezone = arg.timezone
+    }else{
+     
+        outObj.timezone = 'none'
+    }
+    return outObj
+    }
 
+
+const zoomMissedParser = (arg) => {
+    console.log(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500")
+    if(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500"){
+        console.log(arg["payload"]["object"]["callee"]["device_type"].includes("PolycomVVX-VVX"))
+        if(arg["payload"]["object"]["callee"]["device_type"].includes("PolycomVVX-VVX")){
+            console.log(arg["payload"]["object"]["caller"]["phone_number"].length >=10)
+            if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
+    }else{
+        return false
+    }
+}
+
+
+
+app.post('/webhook', async (req, res) => {
+    if (req.body.event === 'endpoint.url_validation') {
+        let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
+
+        return res.json({
+            plainToken: req.body.payload.plainToken,
+            encryptedToken: encryptedToken
+        })
+        
+    }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
+        res.sendStatus(200)
+    }else if(req.body.event === 'phone.callee_missed'){
+        let fetchObj = tZandNmParser(req.body.payload.object.caller)
+        console.log("tZandNMParser fetchobj",fetchObj)
+            try{
+                //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
+                res.sendStatus(200)
+            }catch(e){
+                try{
+                    //add zoom inbound errer workflow
+                   // await fetchFunc({message: 'failed missed call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+                    res.sendStatus(200)
+                }catch(e){
+                    throw new Error(e)
+                }
+            }
+            
+        
+        res.sendStatus(200)
+    }else if (req.body.event === 'phone.callee_ringing'){ 
+    let output = zoomMissedParser(req.body)
+    console.log("zoomMissedParser", output)
+    if(output){
+        let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller)
+        console.log("fetchZoomMissed", fetchZoomMissed)
+        try{
+           //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
+           res.sendStatus(200)
+        }catch{
+            try{
+              //  await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+            }catch(e){
+                //throw new Error(e)
+            }
+        }
+    }
+    res.sendStatus(200)
+}
+})
+
+
+/**
 
 //call log array
 let callLog = []
@@ -177,10 +267,7 @@ const callPromise = async (arg) => {
 //zoom webhook
 app.post('/webhook', (req, res) => {
     console.log(JSON.stringify(req.body, null, 4));
-  /*  console.log(callLog.length, 'callLog length')
-    console.log(callLog.indexOf(req.body.payload.object.callee.phone_number) === -1)
-    console.log('req.body', req.body, req.body.payload.object.callee )
-    console.log('forwarded by', req.body.payload.object.forwarded_by) */
+  // check if request is for inpoint validation:
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -230,7 +317,7 @@ app.post('/webhook', (req, res) => {
 
 })
 
-
+ */
 
 app.get('/url', (req, res) => {
     let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDURL + process.env.SCOPE
