@@ -140,31 +140,6 @@ async function fetchFunc(object, url){
 }
 
 
-const fileExtensionAppender = (file, filename) => {
-let outString = filename;
-if (file.includes('.pdf')) {
-    outString = outString + ".pdf"
-} else if (file.includes('.docx')) {
-    outString = outString + ".docx"
-} else if (file.includes('.doc')) {
-    outString = outString + ".doc"
-} else if (file.includes('.jpg')) {
-    outString = outString + ".jpg"
-} else if (file.includes('.jpeg')) {
-    outString = outString + ".jpeg"
-} else if (file.includes('.png')) {
-    outString = outString + ".png"
-} else if (file.includes('.gif')) {
-    outString = outString + ".gif"
-} else if (file.includes('.xls')) {
-    outString = outString + ".xls"
-} else if (file.includes('.csv')) {
-    outString = outString + ".csv"
-}
-
-return outString
-} 
-
 app.use(express.static(path.join(__dirname, "apps", "HighLevelAppBoilerplate",  'public' )))
 
 app.get('/', async (req, res) => 

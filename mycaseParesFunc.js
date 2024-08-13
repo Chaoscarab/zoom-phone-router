@@ -1,5 +1,6 @@
 
 const mycaseParse = async (inputData) => {
+    console.log("input data", inputData)
     const dob = inputData.dob
     const spousedob = inputData.spouseDob
     const spousessn = inputData.spousessl
