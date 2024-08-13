@@ -25,34 +25,30 @@ const mycaseParse = async (inputData) => {
     }else{
        outObj.mycaseID = "F"
     }
-    function hasWhiteSpace(s) 
-    {
-    if(typeof s != 'string'){
-      return false
-    }
-        var reWhiteSpace = new RegExp("/^\s+$/");
-    /**
-        // Check for white space
-        if (reWhiteSpace.test(s)) {
-            //alert("Please Check Your Fields For Spaces");
-            return false;
+    function hasNoDash(s){
+        if(typeof s != 'string'){
+            return false
         }
-        console.log(s)
-       */
         if(s.includes("/")){
             return false
         }
         return true;
     }
+
     
     const datetoIOS = (arg) => {
         arg = arg.replaceAll(',', '')
         if(arg === '' || arg === " "){
             return ''
         }else{
-            console.log("arg", arg)
-            console.log(hasWhiteSpace(arg))
-            if(hasWhiteSpace(arg)){
+            if(hasNoDash(arg)){
+                if(arg.includes("-")){
+
+                    let dashDate = new Date(arg)
+                    return dashDate.toISOString();
+
+
+                }else{
                 let output = ''
                 console.log('argument', arg)
                 let outdob = arg.split(' ')
@@ -74,7 +70,7 @@ const mycaseParse = async (inputData) => {
                 console.log("date output", output)
                 let dobObj= new Date(output)
             return dobObj.toISOString();
-            }else{
+           } }else{
                 let dobObj= new Date(dob)
                 return  dobObj.toISOString();
             }
