@@ -506,13 +506,15 @@ app.post('/mycasemisc', async (req, res) => {
 //test for oauth token:
 
 app.post('/authtest', (req, res) => {
-    console.log(req.headers.authorization)
-    res.sendStatus(200)
+    console.log(req.body)
+    
     if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
         console.log('true')
+        res.sendStatus(200)
     }else{
         console.log(`Bearer ${process.env.HLBEARER}`, req.headers.authorization)
         console.log(false)
+        res.sendStatus(200)
     }
 })
 
