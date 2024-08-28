@@ -78,40 +78,7 @@ async function updateDoc(fieldtoUpdate, updateObject){
 
 app.use(express.json({}))
 
-//process.env.CERTDIR
-///HTTPSPORT
-//process.env.SECRETKEY
-
-/** 
-    function objectParser(arg, arg2){
-    let outObj = {}
-    outObj.type = arg2
-    if(arg.hasOwnProperty('phone_number') && arg.phone_number.length >= 10){
-        outObj.phone_number = arg.phone_number
-    }else{
-
-        return false
-    }
-
-    if(arg.hasOwnProperty('name')){
-        outObj.name = arg.name
-    }else{
-        outObj.name = 'none'
-    }
-
-    if(arg.hasOwnProperty('timezone')){
-       
-        outObj.timezone = arg.timezone
-    }else{
-     
-        outObj.timezone = 'none'
-    }
-
-  
-    return outObj
-
-    }
-*/
+/
 async function fetchFunc(object, url){
     try{
         const rawResponse = await fetch(url,{
@@ -204,7 +171,7 @@ app.post('/webhook', async (req, res) => {
     }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
         return res.sendStatus(200)
     }else if(req.body.event === 'phone.callee_missed'){
-        let fetchObj = tZandNmParser(req.body.payload.object.caller, "missed")
+        //let fetchObj = tZandNmParser(req.body.payload.object.caller, "missed")
         
             try{
                 //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
@@ -220,7 +187,7 @@ app.post('/webhook', async (req, res) => {
     }else if (req.body.event === 'phone.callee_ringing'){ 
         let output = zoomMissedParser(req.body)
         if(output){
-            let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
+           // let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
             try{
             //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
             res.sendStatus(200)
@@ -238,79 +205,6 @@ app.post('/webhook', async (req, res) => {
 })
 
 
-/**
-
-//call log array
-let callLog = []
-
-const callPromise = async (arg) => {
-//req.body.payload.object.callee.phone_number === arg
-    callLog.push(arg);
-    let promise = new Promise(function(resolve, reject) {
-      setTimeout(() => {
-        const indexToRemove = callLog.indexOf(arg);
-        if (indexToRemove !== -1) {
-          callLog.splice(indexToRemove, 1);
-          resolve()
-        }
-      }, 20000);
-    });
-    }
-
-//zoom webhook
-app.post('/webhook', (req, res) => {
-    console.log(JSON.stringify(req.body, null, 4));
-  // check if request is for inpoint validation:
-    if (req.body.event === 'endpoint.url_validation') {
-        let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
-
-        return res.json({
-            plainToken: req.body.payload.plainToken,
-            encryptedToken: encryptedToken
-        })
-        
-    }else if(req.body.payload.object.caller.phone_number === '+17725895500'){
-        res.sendStatus(200)
-    }
-    else if(req.body.event === 'phone.callee_missed'){
-
-        
-        let fetchObj = objectParser(req.body.payload.object.caller, 'missed')
-        if(fetchObj === false){
-
-        }else{
-            
-            fetchFunc(fetchObj, process.env.HIGHLEVELURL)
-        }
-        res.sendStatus(200)
-
-    
-    }else if (req.body.event === 'phone.callee_ringing' && req.body.payload.object.callee.phone_number === '+17725895500' && callLog.indexOf(req.body.payload.object.callee.phone_number) === -1 && !req.body.payload.object.hasOwnProperty){ 
-       // console.log('body:', req.body, "caller:", req.body.payload.object.caller, "callee:", req.body.payload.object.callee)
-        
-        //create promise for call log
-        callPromise(req.body.payload.object.callee.phone_number)
-        
-        let fetchObj = objectParser(req.body.payload.object.caller, 'ringing')
-        //console.log('fetchObj', fetchObj)
-        if(fetchObj === false || req.body.payload.object.hasOwnProperty('forwarded_by')){
-        //console.log('forwared by', req.body.payload.object.forwarded_by)
-        }else{
-           // console.log('webhook triggered')
-            fetchFunc(fetchObj, process.env.ZOOMINBOUND)
-        }
-        res.sendStatus(200)
-    }
-
-
-
-
-
-
-
-})
-
- */
 
 app.get('/url', (req, res) => {
     let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDURL + process.env.SCOPE
@@ -419,8 +313,7 @@ const customValsFileMap = (arg) => {
         }
         
     })
-    //console.log(fields, 'custom fields:', fields.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
-return fileArray
+  return fileArray
 } 
 
 const notesMap = (arg) => {
@@ -486,11 +379,6 @@ app.post('/app', async (req, res) => {
             console.log('issue with mycaseUpload')
             res.sendStatus(500)
            }
-
-           
-        //console.log(getContact)
-        //console.log(getContact, 'custom fields:', getContact.body.contact.customFields[1].value['efdf5a18-862b-40b5-9810-b055f4fef05f'].meta.originalname)
-           
             
             
         }else{
