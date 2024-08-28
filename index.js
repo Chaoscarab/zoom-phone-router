@@ -357,6 +357,9 @@ const myCaseUpload = async (files, notes, caseId) => {
 
 
 app.post('/app', async (req, res) => {
+    if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
+        console.log('true app')
+    }
     const userId = req.body.customData.userId
     let mycaseId = req.body['MyCase ID']
    
@@ -470,6 +473,9 @@ app.post('/app', async (req, res) => {
 })
 
 app.post('/mycasemisc', async (req, res) => {
+    if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
+        console.log('true mycasemisc')
+    }
     let parseObj = await mycaseParse(req.body.customData)
 
     if(parseObj === false){
@@ -503,20 +509,7 @@ app.post('/mycasemisc', async (req, res) => {
 })
 
 
-//test for oauth token:
 
-app.post('/authtest', (req, res) => {
-    console.log(req.body)
-    
-    if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
-        console.log('true')
-        res.sendStatus(200)
-    }else{
-        console.log(`Bearer ${process.env.HLBEARER}`, req.headers.authorization)
-        console.log(false)
-        res.sendStatus(200)
-    }
-})
 
 app.listen(process.env.PORT, () => {
 
