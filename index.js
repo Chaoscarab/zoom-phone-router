@@ -506,7 +506,7 @@ app.post('/mycasemisc', async (req, res) => {
 //test for oauth token:
 
 app.post('/authtest', (req, res) => {
-    console.log(req.header.authorization)
+    console.log(req.headers)
     res.sendStatus(200)
 })
 
