@@ -207,11 +207,18 @@ app.post('/webhook', async (req, res) => {
 
 
 app.get('/url', (req, res) => {
+    if(process.env.REGISTERNEWUSER === 'false'){
+        res.sendStatus(401)
+    }else{
     let url = process.env.URL + process.env.REDIRECT + process.env.CLIENTIDURL + process.env.SCOPE
-    res.json({url: url})
+    res.json({url: url})}
 })
 
 app.get('/code', (req, res) => {
+    if(process.env.REGISTERNEWUSER === 'false'){
+    res.sendStatus(401)
+}else{
+
     const getKeys = async () => {
         let params = {
             client_id: process.env.CLIENTID,
@@ -263,7 +270,7 @@ app.get('/code', (req, res) => {
         console.log(e)
 
     }
-
+}
 })
 
 const hlContactFetch = async (creds, arg) => {
