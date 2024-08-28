@@ -69,7 +69,7 @@ async function updateDoc(fieldtoUpdate, updateObject){
         console.log(e)
     }finally {
         await client.close()
-        console.log(output)
+        
         return output;
     }
 }
@@ -149,7 +149,6 @@ app.get('/', async (req, res) =>
 })
 
 app.get('/subscribe', (req, res) => {
-    console.log(path.join(__dirname, "apps","HighLevelAppBoilerplate",  'public', 'index.html'))
      res.sendFile(path.join(__dirname, "apps","HighLevelAppBoilerplate",  'public', 'index.html'))
 
 })
@@ -174,11 +173,10 @@ const tZandNmParser = (arg, arg2) => {
 
 
 const zoomMissedParser = (arg) => {
-    console.log(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500")
     if(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500"){
-        console.log(arg["payload"]["object"]["callee"]["device_type"].includes("PolycomVVX-VVX"))
+       
         if(arg["payload"]["object"]["callee"]["device_type"].includes("PolycomVVX-VVX")){
-            console.log(arg["payload"]["object"]["caller"]["phone_number"].length >=10)
+           
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
                 return true
             }else{
@@ -207,7 +205,7 @@ app.post('/webhook', async (req, res) => {
         return res.sendStatus(200)
     }else if(req.body.event === 'phone.callee_missed'){
         let fetchObj = tZandNmParser(req.body.payload.object.caller, "missed")
-        console.log("tZandNMParser fetchobj",fetchObj)
+        
             try{
                 //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
                return  res.sendStatus(200)
@@ -439,7 +437,6 @@ const notesMap = (arg) => {
 
 const myCaseUpload = async (files, notes, caseId) => {
       let promiseField = []
-console.log(files, notes)
       files.forEach(async (file) => {
         let outObj = { id: caseId, file: file.url, filename: file.fileName };
         let zapRes1 = await fetchFunc(outObj, process.env.MKDOCMYCSZAP)
@@ -455,7 +452,6 @@ console.log(files, notes)
 
       try{
         await Promise.all(promiseField)
-        console.log('allpromises complete')
         return 200
       }catch (e){
         console.log(e)
@@ -468,8 +464,6 @@ console.log(files, notes)
 
 
 app.post('/app', async (req, res) => {
-    console.log("request body:", req.body)
-    //req schema req.body = {userId: <id>, hluserID}
     const userId = req.body.customData.userId
     let mycaseId = req.body['MyCase ID']
    
@@ -509,7 +503,7 @@ app.post('/app', async (req, res) => {
                     refresh_token: arg.refresh_token,
                     
                 }
-                console.log(params)
+               
                 let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
                     method: "POST", // or 'PUT'
                     headers: {
@@ -519,7 +513,6 @@ app.post('/app', async (req, res) => {
                     body:  new URLSearchParams(params)
                 })
                 let jsonRaw = await outResponse.json()
-                console.log(outResponse.status, 'statuscode')
                 switch(outResponse.status){
                     case 401:
                         console.log(jsonRaw.statusCode)
