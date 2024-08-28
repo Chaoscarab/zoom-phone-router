@@ -195,8 +195,6 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log('webhook hit', )
-    console.log(JSON.stringify(req.body, null, 4))
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -223,10 +221,8 @@ app.post('/webhook', async (req, res) => {
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
         let output = zoomMissedParser(req.body)
-        console.log("zoomMissedParser", output)
         if(output){
             let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
-            console.log("fetchZoomMissed", fetchZoomMissed)
             try{
             //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
             res.sendStatus(200)
@@ -343,7 +339,6 @@ app.get('/code', (req, res) => {
         let jsonRaw = await outResponse.json()
         switch(outResponse.status){
             case 401:
-                console.log(jsonRaw.statusCode)
                 break;
             case 200:
                 let argObj = {
@@ -624,6 +619,14 @@ app.post('/mycasemisc', async (req, res) => {
     
     
 
+})
+
+
+//test for oauth token:
+
+app.post('/authtest', (req, res) => {
+    console.log(req)
+    res.sendStatus(200)
 })
 
 app.listen(process.env.PORT, () => {
