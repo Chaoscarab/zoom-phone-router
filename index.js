@@ -508,6 +508,12 @@ app.post('/mycasemisc', async (req, res) => {
 app.post('/authtest', (req, res) => {
     console.log(req.headers.authorization)
     res.sendStatus(200)
+    if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
+        console.log('true')
+    }else{
+        console.log(`Bearer ${process.env.HLBEARER}`, req.headers.authorization)
+        console.log(false)
+    }
 })
 
 app.listen(process.env.PORT, () => {
