@@ -494,11 +494,10 @@ console.log(parseObj)
     }else{
     let outObj = req.body
     outObj.customData = parseObj
-    console.log(outObj, process.env.MYCSMSCDTA)
     try{
         
         let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
-        
+        console.log(zapRes1)
         res.sendStatus(200)
     }catch{
         try{
