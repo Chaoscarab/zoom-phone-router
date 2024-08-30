@@ -505,6 +505,7 @@ console.log(parseObj)
                 CaseID: req.body.email,
                 Message: "server miscdata upload Error",
                 PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
+                res.sendStatus(200)
         }catch{
             throw new Error()
         }
