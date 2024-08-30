@@ -78,8 +78,9 @@ async function updateDoc(fieldtoUpdate, updateObject){
 
 app.use(express.json({}))
 
-/
+
 async function fetchFunc(object, url){
+    console.log('fetchfunc')
     try{
         const rawResponse = await fetch(url,{
             method: "POST", // or 'PUT'
