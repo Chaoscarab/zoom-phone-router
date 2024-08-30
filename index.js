@@ -485,15 +485,15 @@ app.post('/mycasemisc', async (req, res) => {
         console.log('true mycasemisc')
     }
     let parseObj = await mycaseParse(req.body.customData)
-console.log(parseObj)
     if(parseObj === false){
         let hlError = await fetchFunc({
             CaseID: req.body.email,
-            Message: "invalid mycase ID",
+            Message: "invalid mycaseParse Error",
             PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
     }else{
     let outObj = req.body
     outObj.customData = parseObj
+    console.log(outObj.customData)
     try{
         
         let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
