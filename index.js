@@ -90,6 +90,7 @@ async function fetchFunc(object, url){
             credentials: "include",
             body: JSON.stringify(object)
         });
+        console.log(rawResponse)
         try {
            let passBack = await rawResponse.json()
            return passBack
