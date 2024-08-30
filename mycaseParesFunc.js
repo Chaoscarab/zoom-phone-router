@@ -36,7 +36,7 @@ const mycaseParse = async (inputData) => {
         return true;
     }
 
-    
+    //'09/08/1994'
     const datetoIOS = (arg) => {
         arg = arg.replaceAll(',', '')
         if(arg === '' || arg === " "){
@@ -44,11 +44,8 @@ const mycaseParse = async (inputData) => {
         }else{
             if(hasNoDash(arg)){
                 if(arg.includes("-")){
-
                     let dashDate = new Date(arg)
                     return dashDate.toISOString();
-
-
                 }else{
                 let output = ''
                 let outdob = arg.split(' ')
@@ -70,17 +67,18 @@ const mycaseParse = async (inputData) => {
                 let dobObj= new Date(output)
             return dobObj.toISOString();
            } }else{
-                let dobObj= new Date(dob)
+                let dobObj= new Date(arg)
                 return  dobObj.toISOString();
             }
         }
         
     }
 
-
+    console.log('dob')
     outObj.dob = datetoIOS(dob)
-
+    console.log('spousedob')
     outObj.spouseDob = datetoIOS(spousedob)
+    console.log('dod')
     outObj.dateOfDeath = datetoIOS(dod)
 
 
