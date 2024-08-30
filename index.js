@@ -484,7 +484,7 @@ app.post('/mycasemisc', async (req, res) => {
         console.log('true mycasemisc')
     }
     let parseObj = await mycaseParse(req.body.customData)
-
+console.log(parseObj)
     if(parseObj === false){
         let hlError = await fetchFunc({
             CaseID: req.body.email,
