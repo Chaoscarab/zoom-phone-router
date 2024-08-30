@@ -495,11 +495,12 @@ app.post('/mycasemisc', async (req, res) => {
     outObj.customData = parseObj
     console.log(outObj.customData)
     try{
-        
+        console.log("zapres1, try")
         let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
-        console.log(zapRes1)
+        console.log(zapRes1, 'output')
         res.sendStatus(200)
-    }catch{
+    }catch(e){
+        console.log(e, 'error')
         try{
             let hlError = await fetchFunc({
                 CaseID: req.body.email,
