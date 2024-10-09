@@ -208,7 +208,6 @@ caller":{"n  ame":"WATCH SHEYENNE","extension_type":"pstn","extension_number":19
  */
 
 app.post('/webhook', async (req, res) => {
-    console.log('webhookcalled', JSON.stringify(req.body))
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -234,9 +233,9 @@ app.post('/webhook', async (req, res) => {
                 }
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
-        let webhookIn = req.body
         console.log('ringing')
         let output = zoomMissedParser(req.body)
+        console.log(output)
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
                 console.log(fetchZoomMissed)
