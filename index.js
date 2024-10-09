@@ -143,6 +143,7 @@ const tZandNmParser = (arg, arg2) => {
 
 const zoomMissedParser = (arg) => {
     let receptionist = arg["payload"]["object"]["callee"]['device_name']
+    console.log(receptionist)
     if(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500"){
         if(receptionist == "Vanessa Gonzalez" || receptionist == "Krystal Marshall" || receptionist == "Jasmine Fernandez"){
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
