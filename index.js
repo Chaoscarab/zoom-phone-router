@@ -187,6 +187,7 @@ app.post('/webhook', async (req, res) => {
                 }
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
+        console.log('ringing')
         let output = zoomMissedParser(req.body)
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
