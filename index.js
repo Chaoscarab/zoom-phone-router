@@ -190,6 +190,7 @@ app.post('/webhook', async (req, res) => {
         let output = zoomMissedParser(req.body)
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
+                console.log(fetchZoomMissed)
             try{
                 let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
             res.sendStatus(200)
