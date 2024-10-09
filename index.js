@@ -162,7 +162,6 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log(req.body)
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -190,15 +189,15 @@ app.post('/webhook', async (req, res) => {
     }else if (req.body.event === 'phone.callee_ringing'){ 
         let output = zoomMissedParser(req.body)
         if(output){
-           // let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
+                let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
             try{
-            //let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
+                let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
             res.sendStatus(200)
             }catch{
                 try{
-                //  await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+                    await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
                 }catch(e){
-                    //throw new Error(e)
+                    throw new Error(e)
                 }
             }
         }
