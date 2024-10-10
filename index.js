@@ -210,7 +210,7 @@ caller":{"n  ame":"WATCH SHEYENNE","extension_type":"pstn","extension_number":19
 
 app.post('/webhook', async (req, res) => {
     console.log('webhook called')
-    console.dir(req.body)
+    console.dir(req.body, { depth: null })
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
