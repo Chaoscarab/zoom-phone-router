@@ -143,9 +143,9 @@ const tZandNmParser = (arg, arg2) => {
 
 const zoomMissedParser = (arg) => {
     let device = arg["payload"]["object"]["callee"]['device_name']
-    console.log(device, device == "Vanessa Gonzalez", device == "D78", (device == "Desk Phone" && arg["payload"]["object"]["callee"]["name"] == ' Jasmine Fernandez'))
-    if(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500"){
-        if(device == "Vanessa Gonzalez" || device == "D78" || (device == "Desk Phone" && arg["payload"]["object"]["callee"]["name"] == ' Jasmine Fernandez')){
+    console.log(device, device == process.env.DEVICEA, device == process.env.DEVICEB, (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC))
+    if(arg["payload"]["object"]["callee"]["phone_number"] === process.env.DESKPHONE){
+        if(device == process.env.DEVICEA || device == device == process.env.DEVICEB || (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC)){
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
                 return true
             }else{
@@ -159,54 +159,6 @@ const zoomMissedParser = (arg) => {
     }
 }
 
-/**
- * 
- *  
- * //incoming webhook object phone request
- * {
-"event":"phone.callee_ringing",
-"payload":{
-        "account_id":"LFx1n-unSBqq2VJRZDBP1w",
-        "object":{
-                "call_id":"7423872385907512753",
-                "caller":{
-                        "n  ame":"LA GRANGE KY",
-                        "extension_type":"pstn",
-                        "extension_number":15025304631,
-                        "phone_number":"+15025304631",
-                        "connection_type":"pstn_off_net"
-                        },
-                "callee":{
-                "name":"Vanessa Gonzalez",
-                "extension_id":"9rH5Y6bgRpSLVqzB-6BKBg",
-                "extension_type":"user",
-                " user_id":"DQvHtFOWTtSIlF-wbiDd-A",
-                "timezone":"America/New_York",
-                "extension_number":221,
-                "phone_number":"+17725895500",
-                "device_id":"4f78aa9de38e7a3a39c9c89636690004a751fb43aa6a6b407f47b675f55169db",
-                "device_type":"Windows_Client(6.1.12.46889)",
-                "device_name":"LULICHLT-017",
-                "connection_type":"voip"
-                },
-                "forwarded_by":{
-                                "name":"Reception",
-                                "extension_type":"callQueue",
-                                "extension_number":"807"},
-                                "redirect_forwarded_by":{},
-                                "ringing_start_time":"2024-10-09T20:16:27Z"
-                                }
-                            },"event_ts":1728504988  000
-                }
-{"event":"phone.callee_ringing","payload":{
-"account_id"  :"LFx1n-unSBqq2VJRZDBP1w",
-"object":{"call_id":"7423881907848991519","
-caller":{"n  ame":"WATCH SHEYENNE","extension_type":"pstn","extension_number":19033079703,
-"phone_number":"+19033079703","connection_type":"pstn_off_net"},
-"callee":{"name":"V  anessa Gonzalez","extension_id":"9rH5Y6bgRpSLVqzB-6BKBg","extension_type":"user" 
- ,"user_id":"DQvHtFOWTtSIlF-wbiDd-A","timezone":"America/New_York","extension_num  ber":221,"phone_number":"+17729188907","device_type":"PolycomVVX-VVX_450-UA/6.4.  6.3284","device_name":"Vanessa Gonzalez","connection_type":"voip"},"redirect_for  warded_by":{},"ringing_start_time":"2024-10-09T20:53:24Z"}},"event_ts":172850720  4310}
-
- */
 
 app.post('/webhook', async (req, res) => {
     console.log('webhook called')
