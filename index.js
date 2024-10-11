@@ -143,7 +143,7 @@ const tZandNmParser = (arg, arg2) => {
 
 const zoomMissedParser = (arg) => {
     let device = arg["payload"]["object"]["callee"]['device_name']
-    console.log(device, device == process.env.DEVICEA, device == process.env.DEVICEB, (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC))
+    console.log(device, arg["payload"]["object"]["callee"]["name"],  device == process.env.DEVICEA, device == process.env.DEVICEB, (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC))
     if(arg["payload"]["object"]["callee"]["phone_number"] === process.env.DESKPHONE){
         if(device == process.env.DEVICEA || device == device == process.env.DEVICEB || (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC)){
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
