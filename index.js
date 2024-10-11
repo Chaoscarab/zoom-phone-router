@@ -143,9 +143,10 @@ const tZandNmParser = (arg, arg2) => {
 
 const zoomMissedParser = (arg) => {
     let device = arg["payload"]["object"]["callee"]['device_name']
+    console.log(process.env.DEVICEA, process.env.DEVICEB, process.env.DEVICEC, process.env.USERC)
     console.log(device, arg["payload"]["object"]["callee"]["name"],  device == process.env.DEVICEA, device == process.env.DEVICEB, (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC))
     if(arg["payload"]["object"]["callee"]["phone_number"] === process.env.DESKPHONE){
-        if(device == process.env.DEVICEA || device == device == process.env.DEVICEB || (device == process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] == process.env.USERC)){
+        if(device == process.env.DEVICEA || device === process.env.DEVICEB || (device === process.env.DEVICEC && arg["payload"]["object"]["callee"]["name"] === process.env.USERC)){
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
                 return true
             }else{
@@ -370,7 +371,7 @@ const myCaseUpload = async (files, notes, caseId) => {
 
 
 app.post('/app', async (req, res) => {
-    
+
     if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
         console.log('true app')
         const userId = req.body.customData.userId
