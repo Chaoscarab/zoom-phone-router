@@ -142,10 +142,10 @@ const tZandNmParser = (arg, arg2) => {
 
 
 const zoomMissedParser = (arg) => {
-    let receptionist = arg["payload"]["object"]["callee"]['device_name']
-    console.log(receptionist, receptionist == "Vanessa Gonzalez", receptionist == "Krystal Marshall", receptionist == "Jasmine Fernandez")
+    let device = arg["payload"]["object"]["callee"]['device_name']
+    console.log(device, device == "Vanessa Gonzalez", device == "D78", (device == "Desk Phone" && arg["payload"]["object"]["callee"]["name"] == ' Jasmine Fernandez'))
     if(arg["payload"]["object"]["callee"]["phone_number"] === "+17725895500"){
-        if(receptionist == "Vanessa Gonzalez" || receptionist == "Krystal Marshall" || receptionist == "Jasmine Fernandez"){
+        if(device == "Vanessa Gonzalez" || device == "D78" || (device == "Desk Phone" && arg["payload"]["object"]["callee"]["name"] == ' Jasmine Fernandez')){
             if(arg["payload"]["object"]["caller"]["phone_number"].length >=10){
                 return true
             }else{
