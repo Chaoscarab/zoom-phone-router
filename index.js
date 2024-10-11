@@ -370,10 +370,10 @@ const myCaseUpload = async (files, notes, caseId) => {
 
 
 app.post('/app', async (req, res) => {
+    
     if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
         console.log('true app')
-    }
-    const userId = req.body.customData.userId
+        const userId = req.body.customData.userId
     let mycaseId = req.body['MyCase ID']
    
     
@@ -482,41 +482,49 @@ app.post('/app', async (req, res) => {
         console.log(error)
     }
         
+    }else{
+        res.sendStatus(403)
+    }
+    
     
 })
 
 app.post('/mycasemisc', async (req, res) => {
     if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
         console.log('true mycasemisc')
-    }
-    let parseObj = await mycaseParse(req.body.customData)
-    if(parseObj === false){
-        let hlError = await fetchFunc({
-            CaseID: req.body.email,
-            Message: "invalid mycaseParse Error",
-            PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
-    }else{
-    let outObj = req.body
-    outObj.customData = parseObj
-    console.log(outObj.customData)
-    try{
-        console.log("zapres1, try")
-        let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
-        console.log(zapRes1, 'output')
-        res.sendStatus(200)
-    }catch(e){
-        console.log(e, 'error')
-        try{
+        let parseObj = await mycaseParse(req.body.customData)
+        if(parseObj === false){
             let hlError = await fetchFunc({
                 CaseID: req.body.email,
-                Message: "server miscdata upload Error",
+                Message: "invalid mycaseParse Error",
                 PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
-                res.sendStatus(200)
-        }catch{
-            throw new Error()
+        }else{
+        let outObj = req.body
+        outObj.customData = parseObj
+        console.log(outObj.customData)
+        try{
+            console.log("zapres1, try")
+            let zapRes1 = await fetchFunc(outObj, process.env.MYCSMSCDTA)
+            console.log(zapRes1, 'output')
+            res.sendStatus(200)
+        }catch(e){
+            console.log(e, 'error')
+            try{
+                let hlError = await fetchFunc({
+                    CaseID: req.body.email,
+                    Message: "server miscdata upload Error",
+                    PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
+                    res.sendStatus(200)
+            }catch{
+                throw new Error()
+            }
         }
+        }
+
+    }else{
+        res.sendStatus(403)
     }
-    }
+    
     
     
     
