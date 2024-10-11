@@ -137,6 +137,7 @@ const tZandNmParser = (arg, arg2) => {
      
         outObj.timezone = 'none'
     }
+    outObj.phoneNumber = arg.phone_number
     return outObj
     }
 
@@ -200,7 +201,7 @@ app.post('/webhook', async (req, res) => {
             res.sendStatus(200)
             }catch{
                 try{
-                    await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+                    await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["calleer"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
                 }catch(e){
                     throw new Error(e)
                 }
