@@ -163,8 +163,7 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log('webhook called')
-    console.dir(req.body, { depth: null })
+    console.log('webhook called', req.body.event)
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -177,7 +176,6 @@ app.post('/webhook', async (req, res) => {
         return res.sendStatus(200)
     }else if(req.body.event === 'phone.callee_missed'){
         //let fetchObj = tZandNmParser(req.body.payload.object.caller, "missed")
-
             try{
                 //let fetchObjMissed = await fetchFunc(fetchObj, process.env.HIGHLEVELURL)
                return  res.sendStatus(200)
@@ -191,13 +189,34 @@ app.post('/webhook', async (req, res) => {
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
         console.log('ringing')
+        console.dir(req.body, { depth: null })
         let output = zoomMissedParser(req.body)
         console.log(output)
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
                 console.log("sent data packet:", fetchZoomMissed)
             try{
-                let output =  await fetchFunc(fetchZoomMissed, process.env.ZOOMINBOUND)
+
+                let zoomURL = ''
+                let device = req.body["payload"]["object"]["callee"]['device_name']
+                console.log(device)
+                switch(device){
+                    case process.env.DEVICEA:
+                        zoomURL = process.env.ZOOMINBOUND
+                    break;
+                    case process.env.DEVICEB:
+                        zoomURL = process.env.ZOOMINBOUND2
+                    break;
+                    case process.env.DEVICEC:
+                        zoomURL = process.env.ZOOMINBOUND3
+
+                    break;
+                    default:
+                    console.log('failure:', device)
+                }
+                
+                
+                let output =  await fetchFunc(fetchZoomMissed, zoomURL)
             res.sendStatus(200)
             }catch{
                 try{
@@ -233,7 +252,6 @@ app.get('/code', (req, res) => {
             client_secret: process.env.CLIENTSECRET,
             grant_type:'authorization_code',
             code: req.query.code,
-            
         }
         let outResponse = await fetch('https://services.leadconnectorhq.com/oauth/token',{
             method: "POST", // or 'PUT'
