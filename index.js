@@ -163,7 +163,6 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log('webhook called', req.body.event)
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
@@ -188,10 +187,8 @@ app.post('/webhook', async (req, res) => {
                 }
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
-        console.log('ringing')
-        console.dir(req.body, { depth: null })
+        //console.dir(req.body, { depth: null })
         let output = zoomMissedParser(req.body)
-        console.log(output)
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
                 console.log("sent data packet:", fetchZoomMissed)
@@ -199,7 +196,6 @@ app.post('/webhook', async (req, res) => {
 
                 let zoomURL = ''
                 let device = req.body["payload"]["object"]["callee"]['device_name']
-                console.log(device)
                 switch(device){
                     case process.env.DEVICEA:
                         zoomURL = process.env.ZOOMINBOUND
@@ -510,6 +506,7 @@ app.post('/app', async (req, res) => {
 })
 
 app.post('/mycasemisc', async (req, res) => {
+    console.log("authorized: ", req.headers.authorization === `Bearer ${process.env.HLBEARER}`)
     if(req.headers.authorization === `Bearer ${process.env.HLBEARER}`){
         console.log('true mycasemisc')
         let parseObj = await mycaseParse(req.body.customData)
