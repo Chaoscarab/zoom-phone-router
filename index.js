@@ -359,6 +359,7 @@ const notesMap = (arg) => {
 
 const myCaseUpload = async (files, notes, caseId) => {
       let promiseField = []
+      console.log(files)
       files.forEach(async (file) => {
         let outObj = { id: caseId, file: file.url, filename: file.fileName };
         let zapRes1 = await fetchFunc(outObj, process.env.MKDOCMYCSZAP)
@@ -514,7 +515,7 @@ app.post('/mycasemisc', async (req, res) => {
             let hlError = await fetchFunc({
                 CaseID: req.body.email,
                 Message: "invalid mycaseParse Error",
-                PhoneNumber: req.body.phone,}, process.env.HLERRORURL)
+                PhoneNumber: req.body.phone}, process.env.HLERRORURL)
         }else{
         let outObj = req.body
         outObj.customData = parseObj
