@@ -189,6 +189,8 @@ app.post('/webhook', async (req, res) => {
     }else if (req.body.event === 'phone.callee_ringing'){ 
         //console.dir(req.body, { depth: null })
         let output = zoomMissedParser(req.body)
+
+        console.log(req.body["payload"]["object"]["callee"]['device_name'])
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
                // console.log("sent data packet:", fetchZoomMissed)
