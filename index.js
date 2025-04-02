@@ -214,7 +214,7 @@ app.post('/webhook', async (req, res) => {
                    // await fetchFunc({message: 'failed missed call trigger', phoneNumber: req.body["payload"]["object"]["callee"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
                 }catch(e){
                     throw new Error(e)
-                }
+                }   
             }
     }else if (req.body.event === 'phone.callee_ringing'){ 
         //console.dir(req.body, { depth: null })
@@ -247,11 +247,11 @@ app.post('/webhook', async (req, res) => {
                     console.log(JSON.stringify(req.body))
                 }
                 
-                if(zoomURL != ''&& processCallNotification(fetchZoomMissed)){
+                if(zoomURL != '' && processCallNotification(fetchZoomMissed)){
                     
                 let output =  await fetchFunc(fetchZoomMissed, zoomURL)
                 }
-                console.log(zoomURL, JSON.stringify(req.body))
+                console.log(`url is : '${zoomURL}' JSON object: `, JSON.stringify(req.body))
                 res.sendStatus(200)
             }catch{
                 try{
@@ -447,7 +447,9 @@ app.post('/app', async (req, res) => {
             let ffRes = await hlNotesFetch(read, req.body.contact_id)
 
            let values =  customValsFileMap(getContact)
-           let notes = notesMap(ffRes.body.notes)
+           if(ffRes.body.notes){
+            let notes = notesMap(ffRes.body.notes)
+           }
            let mycaseUpload = await myCaseUpload(values, notes, mycaseId)
            if(mycaseUpload === 200){
             res.sendStatus(200)
