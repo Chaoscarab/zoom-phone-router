@@ -219,7 +219,7 @@ app.post('/webhook', async (req, res) => {
                 if(zoomURL != ''){
                 let output =  await fetchFunc(fetchZoomMissed, zoomURL)
                 }
-                
+                console.log(zoomURL, JSON.stringify(req.body))
                 res.sendStatus(200)
             }catch{
                 try{
