@@ -195,9 +195,10 @@ app.post('/webhook', async (req, res) => {
         if(output){
                 let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
                // console.log("sent data packet:", fetchZoomMissed)
+               let zoomURL = ''
             try{
 
-                let zoomURL = ''
+                
                 let device = req.body["payload"]["object"]["callee"]['device_name']
                 switch(device){
                     case process.env.DEVICEA:
