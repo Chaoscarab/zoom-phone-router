@@ -164,7 +164,6 @@ const zoomMissedParser = (arg) => {
 
 
 app.post('/webhook', async (req, res) => {
-    console.log("a:", process.env.ZOOMINBOUND, "b:", process.env.ZOOMINBOUND2, "c:", process.env.ZOOMINBOUND3)
     if (req.body.event === 'endpoint.url_validation') {
         let encryptedToken = crypto.createHmac('sha256', process.env.SECRETKEY).update(req.body.payload.plainToken).digest('hex');
 
