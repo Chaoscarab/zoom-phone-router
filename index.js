@@ -184,6 +184,7 @@ function processCallNotification(callData) {
     
     // Set up automatic cache cleanup
     setTimeout(() => {
+        console.log('timeout complete')
       callCache.delete(cacheKey);
     }, CACHE_EXPIRY_MS);
     
@@ -232,10 +233,7 @@ app.post('/webhook', async (req, res) => {
                 switch(device){
                     case process.env.DEVICEA:
                         console.log(`${process.env.DEVICEA} called`)
-                        console.log('request body:')
-                        console.log(JSON.stringify(req.body))
                         zoomURL = process.env.ZOOMINBOUND
-                        console.log( 'zoomurl:', zoomURL, 'zominbound:', process.env.ZOOMINBOUND)
                     break;
                     case process.env.DEVICEB:
                         zoomURL = process.env.ZOOMINBOUND2
@@ -254,7 +252,6 @@ app.post('/webhook', async (req, res) => {
                     
                 let output =  await fetchFunc(fetchZoomMissed, zoomURL)
                 }
-                console.log(`url is : '${zoomURL}' JSON object: `, JSON.stringify(req.body))
                 res.sendStatus(200)
             }catch{
                 try{
