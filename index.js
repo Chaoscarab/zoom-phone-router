@@ -213,16 +213,19 @@ app.post('/webhook', async (req, res) => {
                     break;
                     default:
                     console.log('failure:', device)
+                    console.log(JSON.stringify(req.body))
                 }
                 
-                
+                if(zoomURL != ''){
                 let output =  await fetchFunc(fetchZoomMissed, zoomURL)
-            res.sendStatus(200)
+                }
+                
+                res.sendStatus(200)
             }catch{
                 try{
                     console.log('error')
                     console.log(JSON.stringify(req.body))
-                    await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["calleer"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
+                    await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["caller"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
                 }catch(e){
                     throw new Error(e)
                 }
