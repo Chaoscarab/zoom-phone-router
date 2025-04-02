@@ -162,6 +162,35 @@ const zoomMissedParser = (arg) => {
 }
 
 
+//map for storing duplicate calls 
+const callCache = new Map();
+//expiration for map objects
+const CACHE_EXPIRY_MS = 5 * 60 * 1000;
+
+function processCallNotification(callData) {
+    // Create a unique key based on phone number and name
+    // These fields are identical between duplicate notifications
+    const cacheKey = `${callData.phoneNumber}-${callData.name}`;
+    
+    // Check if we've seen this caller recently
+    if (callCache.has(cacheKey)) {
+      console.log(`Duplicate call notification filtered: ${cacheKey}`);
+      return false; // Don't process this notification
+    }
+    
+    // Store this caller in our cache
+    const currentTime = Date.now();
+    callCache.set(cacheKey, currentTime);
+    
+    // Set up automatic cache cleanup
+    setTimeout(() => {
+      callCache.delete(cacheKey);
+    }, CACHE_EXPIRY_MS);
+    
+    // Process this notification
+    return true;
+  }
+
 
 app.post('/webhook', async (req, res) => {
     if (req.body.event === 'endpoint.url_validation') {
@@ -218,7 +247,8 @@ app.post('/webhook', async (req, res) => {
                     console.log(JSON.stringify(req.body))
                 }
                 
-                if(zoomURL != ''){
+                if(zoomURL != ''&& processCallNotification(fetchZoomMissed)){
+                    
                 let output =  await fetchFunc(fetchZoomMissed, zoomURL)
                 }
                 console.log(zoomURL, JSON.stringify(req.body))
