@@ -184,7 +184,7 @@ function processCallNotification(callData) {
     
     // Set up automatic cache cleanup
     setTimeout(() => {
-        console.log('timeout complete')
+        console.log(`callcache length: ${callCache.length}`)
       callCache.delete(cacheKey);
     }, CACHE_EXPIRY_MS);
     
