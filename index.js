@@ -234,6 +234,7 @@ app.post('/webhook', async (req, res) => {
                         console.log(`${process.env.DEVICEA} called`)
                         console.log(JSON.stringifly(req.body))
                         zoomURL = process.env.ZOOMINBOUND
+                        console.log( 'zoomurl:', zoomURL, 'zominbound:', process.env.ZOOMINBOUND)
                     break;
                     case process.env.DEVICEB:
                         zoomURL = process.env.ZOOMINBOUND2
@@ -245,6 +246,7 @@ app.post('/webhook', async (req, res) => {
                     default:
                     console.log('failure:', device)
                     console.log(JSON.stringify(req.body))
+                    zoomURL = ''
                 }
                 
                 if(zoomURL != '' && processCallNotification(fetchZoomMissed)){
