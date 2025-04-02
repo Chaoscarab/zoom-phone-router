@@ -201,7 +201,7 @@ app.post('/webhook', async (req, res) => {
                 switch(device){
                     case process.env.DEVICEA:
                         console.log(`${process.env.DEVICEA} called`)
-                        console.log(req.body)
+                        console.log(JSON.stringifly(req.body))
                         zoomURL = process.env.ZOOMINBOUND
                     break;
                     case process.env.DEVICEB:
