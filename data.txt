@@ -1,0 +1,33 @@
+{
+  "type": "ringing",
+  "name": "JOHN LANSEER",
+  "timezone": "none",
+  "phoneNumber": "+15857345504",
+  "headers": {
+    "host": "services.leadconnectorhq.com",
+    "cf-ray": "9271306d4eabcf3a-CMH",
+    "x-forwarded-for": "18.222.104.50,10.10.31.148",
+    "user-agent": "node",
+    "sec-fetch-mode": "cors",
+    "accept-encoding": "gzip, br",
+    "cf-ipcountry": "US",
+    "x-forwarded-proto": "https",
+    "accept-language": "*",
+    "content-type": "application/json",
+    "cf-visitor": {
+      "scheme": "https"
+    },
+    "accept": "application/json",
+    "cdn-loop": "cloudflare; loops=1",
+    "cf-connecting-ip": "18.222.104.50",
+    "content-length": "87",
+    "x-envoy-external-address": "10.10.31.148",
+    "x-request-id": "b9168e47-aecc-4523-93d7-af885dce0595",
+    "x-envoy-attempt-count": "1",
+    "x-forwarded-client-cert": "By=spiffe://cluster.local/ns/default/sa/default-automation-workflows;Hash=eae78ae9c3733741242cea32332b55e715e1cad57e8eb74a0d8f2156748d6cb5;Subject=\"\";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account",
+    "x-b3-traceid": "789cfff79b483e76a1cbe5b145415487",
+    "x-b3-spanid": "f3f7be7fe72860e0",
+    "x-b3-parentspanid": "a1cbe5b145415487",
+    "x-b3-sampled": "0"
+  }
+}

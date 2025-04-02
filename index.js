@@ -200,6 +200,8 @@ app.post('/webhook', async (req, res) => {
                 let device = req.body["payload"]["object"]["callee"]['device_name']
                 switch(device){
                     case process.env.DEVICEA:
+                        console.log(`${process.env.DEVICEA} called`)
+                        console.log(req.body)
                         zoomURL = process.env.ZOOMINBOUND
                     break;
                     case process.env.DEVICEB:
