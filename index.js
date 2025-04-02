@@ -220,6 +220,8 @@ app.post('/webhook', async (req, res) => {
             res.sendStatus(200)
             }catch{
                 try{
+                    console.log('error')
+                    console.log(JSON.stringify(req.body))
                     await fetchFunc({message: 'failed ringing call trigger', phoneNumber: req.body["payload"]["object"]["calleer"]["phone_number"]}, process.env.ZOOMINBOUNDERROR)
                 }catch(e){
                     throw new Error(e)
