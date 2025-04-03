@@ -123,8 +123,9 @@ app.get('/subscribe', (req, res) => {
 })
 
 
-const tZandNmParser = (arg, arg2) => {
+const tZandNmParser = (arg, arg2, deviceName) => {
     let outObj = {type: arg2}
+    outObj.device = deviceName
     if(arg.hasOwnProperty('name')){
         outObj.name = arg.name
     }else{
@@ -170,7 +171,7 @@ const CACHE_EXPIRY_MS = 5 * 60 * 1000;
 function processCallNotification(callData) {
     // Create a unique key based on phone number and name
     // These fields are identical between duplicate notifications
-    const cacheKey = `${callData.phoneNumber}-${callData.name}`;
+    const cacheKey = `${callData.phoneNumber}-${callData.name}-${callData.device}`;
     
     // Check if we've seen this caller recently
     if (callCache.has(cacheKey)) {
@@ -223,7 +224,7 @@ app.post('/webhook', async (req, res) => {
         console.log('ringing')
         console.log("device name:", req.body["payload"]["object"]["callee"]['device_name'], "callee:", req.body["payload"]["object"]["callee"]["name"])
         if(output){
-                let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing')
+                let fetchZoomMissed = tZandNmParser(req.body.payload.object.caller, 'ringing', req.body["payload"]["object"]["callee"]['device_name'])
                // console.log("sent data packet:", fetchZoomMissed)
                let zoomURL = ''
             try{
